@@ -1,19 +1,3 @@
-/*
- * Copyright 2016 The TensorFlow Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package ai.fritz.app.fragments;
 
 import android.app.Activity;
@@ -23,7 +7,6 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -44,7 +27,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.TextUtils;
 import android.util.Size;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
@@ -80,15 +62,7 @@ public class CameraConnectionFragment extends Fragment {
     /**
      * Conversion from screen rotation to JPEG orientation.
      */
-    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final String FRAGMENT_DIALOG = "dialog";
-
-    static {
-        ORIENTATIONS.append(Surface.ROTATION_0, 90);
-        ORIENTATIONS.append(Surface.ROTATION_90, 0);
-        ORIENTATIONS.append(Surface.ROTATION_180, 270);
-        ORIENTATIONS.append(Surface.ROTATION_270, 180);
-    }
 
     /**
      * {@link android.view.TextureView.SurfaceTextureListener} handles several lifecycle events on a
@@ -123,7 +97,7 @@ public class CameraConnectionFragment extends Fragment {
      * selected preview size is known.
      */
     public interface ConnectionCallback {
-        void onPreviewSizeChosen(Size size, int cameraRotation);
+        void onPreviewSizeChosen(Size size, Size cameraViewSize, int cameraRotation);
     }
 
     /**
@@ -394,14 +368,6 @@ public class CameraConnectionFragment extends Fragment {
                     chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
                             inputSize.getWidth(),
                             inputSize.getHeight());
-
-            // We fit the aspect ratio of TextureView to the size of preview we picked.
-            final int orientation = getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                textureView.setAspectRatio(previewSize.getWidth(), previewSize.getHeight());
-            } else {
-                textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
-            }
         } catch (final CameraAccessException e) {
             LOGGER.e(e, "Exception!");
         } catch (final NullPointerException e) {
@@ -414,7 +380,8 @@ public class CameraConnectionFragment extends Fragment {
             throw new RuntimeException(getString(R.string.camera_error));
         }
 
-        cameraConnectionCallback.onPreviewSizeChosen(previewSize, sensorOrientation);
+        Size textureViewSize = new Size(textureView.getWidth(), textureView.getHeight());
+        cameraConnectionCallback.onPreviewSizeChosen(previewSize, textureViewSize, sensorOrientation);
     }
 
     /**

@@ -362,7 +362,7 @@ public abstract class DetectorCameraBaseActivity extends Activity
                     CameraConnectionFragment.newInstance(
                             new CameraConnectionFragment.ConnectionCallback() {
                                 @Override
-                                public void onPreviewSizeChosen(final Size size, final int rotation) {
+                                public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
                                     previewHeight = size.getHeight();
                                     previewWidth = size.getWidth();
                                     DetectorCameraBaseActivity.this.onPreviewSizeChosen(size, rotation);

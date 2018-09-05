@@ -6,6 +6,7 @@ import android.content.Intent;
 import ai.fritz.app.DetectorActivity;
 import ai.fritz.app.LiveVideoActivity;
 import ai.fritz.app.CustomTFLiteActivity;
+import ai.fritz.app.StyleActivity;
 import ai.fritz.app.VisionActivity;
 import ai.fritz.app.CustomTFMobileActivity;
 
@@ -38,5 +39,10 @@ public class Navigation {
     public static void goToObjectDetection(Context context) {
         Intent objectDetection = new Intent(context, DetectorActivity.class);
         context.startActivity(objectDetection);
+    }
+
+    public static void goToStyleTransfer(Context context) {
+        Intent styleActivity = new Intent(context, StyleActivity.class);
+        context.startActivity(styleActivity);
     }
 }

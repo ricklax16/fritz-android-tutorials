@@ -1,19 +1,4 @@
 package ai.fritz.app.ui;
-/* Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================*/
-
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -22,13 +7,16 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ai.fritz.app.ml.Classifier.Recognition;
+import ai.fritz.vision.FritzVisionLabel;
 
 public class RecognitionScoreView extends View implements ResultsView {
     private static final float TEXT_SIZE_DIP = 24;
-    private List<Recognition> results;
+    private List<Recognition> results = new ArrayList<>();
+    private List<FritzVisionLabel> labels = new ArrayList<>();
     private final float textSizePx;
     private final Paint fgPaint;
     private final Paint bgPaint;
@@ -53,15 +41,28 @@ public class RecognitionScoreView extends View implements ResultsView {
     }
 
     @Override
+    public void setResult(final List<FritzVisionLabel> labels) {
+        this.labels = labels;
+        postInvalidate();
+    }
+
+    @Override
     public void onDraw(final Canvas canvas) {
         final int x = 10;
         int y = (int) (fgPaint.getTextSize() * 1.5f);
 
         canvas.drawPaint(bgPaint);
 
-        if (results != null) {
+        if (results.size() > 0) {
             for (final Recognition recog : results) {
                 canvas.drawText(recog.getTitle() + ": " + recog.getConfidence(), x, y, fgPaint);
+                y += fgPaint.getTextSize() * 1.5f;
+            }
+        }
+
+        if (labels.size() > 0) {
+            for (final FritzVisionLabel label : labels) {
+                canvas.drawText(label.getText() + ": " + label.getConfidence(), x, y, fgPaint);
                 y += fgPaint.getTextSize() * 1.5f;
             }
         }
