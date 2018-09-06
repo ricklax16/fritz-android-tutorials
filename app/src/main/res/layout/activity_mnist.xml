@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/margin_md"
     android:paddingRight="@dimen/margin_md"
     android:paddingTop="@dimen/margin_md"
     android:paddingBottom="@dimen/margin_md"
-    android:orientation="vertical"
-    tools:context="ai.fritz.app.MnistActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/app_bar" />
 

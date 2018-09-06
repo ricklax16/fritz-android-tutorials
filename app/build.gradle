@@ -44,6 +44,7 @@ dependencies {
     implementation "ai.fritz:custom-model-tflite:${sdk_version}"
     implementation "ai.fritz:vision-label-model:${sdk_version}"
     implementation "ai.fritz:vision-object-model:${sdk_version}"
+    implementation "ai.fritz:vision-style-model:${sdk_version}"
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 

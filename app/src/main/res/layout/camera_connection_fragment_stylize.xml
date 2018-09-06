@@ -37,13 +37,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
-  <ai.fritz.fritzsdkapp.OverlayView
-      android:id="@+id/overlay"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_alignParentTop="true" />
-
-  <ai.fritz.fritzsdkapp.OverlayView
+  <ai.fritz.app.ui.OverlayView
     android:id="@+id/debug_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

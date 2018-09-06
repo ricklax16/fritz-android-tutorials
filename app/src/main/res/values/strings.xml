@@ -3,6 +3,9 @@
     <!-- In the MainActivity -->
     <string name="demo_title">MODELS</string>
 
+    <string name="fritz_vision_style_transfer">Style Transfer</string>
+    <string name="fritz_vision_style_transfer_description">Run style transfer on live video feed.</string>
+
     <string name="fritz_vision_title">Image Labeling Feature</string>
     <string name="fritz_vision_description">Label a still image.</string>
     <string name="fritz_vision_description_live_video">Label video frames</string>
