@@ -30,8 +30,8 @@ public class LiveVideoActivity extends BaseCameraActivity implements ImageReader
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 
-    private FritzVisionOrientation orientation;
     private FritzVisionLabelPredictor predictor;
+    private int imgRotation;
 
     @BindView(R.id.app_toolbar)
     Toolbar appBar;
@@ -57,7 +57,7 @@ public class LiveVideoActivity extends BaseCameraActivity implements ImageReader
 
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
-        orientation = FritzVisionOrientation.getImageOrientationFromCamera(this, cameraId);
+        imgRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
         predictor = FritzVisionLabelPredictor.getInstance(this);
     }
 
@@ -74,8 +74,7 @@ public class LiveVideoActivity extends BaseCameraActivity implements ImageReader
             return;
         }
 
-        final FritzVisionImage fritzImage = FritzVisionImage.fromMediaImage(image);
-        fritzImage.setOrientation(orientation);
+        final FritzVisionImage fritzImage = FritzVisionImage.fromMediaImage(image, imgRotation);
         image.close();
 
 
