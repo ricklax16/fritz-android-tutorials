@@ -1,9 +1,6 @@
 package ai.fritz.app;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
@@ -27,22 +24,21 @@ import ai.fritz.vision.inputs.FritzVisionOrientation;
 
 
 public class StyleActivity extends BaseCameraActivity implements OnImageAvailableListener {
-    private static final String TAG = DetectorCameraBaseActivity.class.getSimpleName();
+    private static final String TAG = StyleActivity.class.getSimpleName();
 
     private static final Size DESIRED_PREVIEW_SIZE = new Size(1280, 960);
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 
-    private Bitmap styledBitmap = null;
+    private FritzVisionImage styledImage;
 
     private FritzVisionStylePredictor predictor;
-    private FritzVisionOrientation orientation;
     private FritzVisionStylePredictorOptions options;
-
-    private Size cameraViewSize;
 
     private OverlayView overlayView;
     private int activeStyleIndex = 0;
+
+    private int imageRotationFromCamera;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -67,8 +63,7 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
         ArtisticStyle[] styles = ArtisticStyle.values();
         predictor = FritzVisionStyleTransfer.getPredictor(this, styles[activeStyleIndex], options);
 
-        orientation = FritzVisionOrientation.getImageOrientationFromCamera(this, cameraId);
-        this.cameraViewSize = cameraViewSize;
+        imageRotationFromCamera = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
 
         overlayView = findViewById(R.id.debug_overlay);
 
@@ -76,9 +71,9 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
                 new OverlayView.DrawCallback() {
                     @Override
                     public void drawCallback(final Canvas canvas) {
-                        if (styledBitmap != null) {
-                            Matrix matrix = new Matrix();
-                            canvas.drawBitmap(styledBitmap, matrix, new Paint());
+                        if (styledImage != null) {
+                            styledImage.scale(cameraViewSize.getWidth(), cameraViewSize.getHeight());
+                            styledImage.drawOnCanvas(canvas);
                         }
                     }
                 });
@@ -113,8 +108,7 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
             return;
         }
 
-        final FritzVisionImage fritzImage = FritzVisionImage.fromMediaImage(image);
-        fritzImage.setOrientation(orientation);
+        final FritzVisionImage fritzImage = FritzVisionImage.fromMediaImage(image, imageRotationFromCamera);
         image.close();
 
 
@@ -123,13 +117,8 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
                     @Override
                     public void run() {
                         final long startTime = SystemClock.uptimeMillis();
-
-                        FritzVisionImage styledImage = predictor.predict(fritzImage);
-                        styledImage.scale(cameraViewSize.getWidth(), cameraViewSize.getHeight());
-                        styledBitmap = styledImage.getBitmap();
-
+                        styledImage = predictor.predict(fritzImage);
                         Log.d(TAG, "INFERENCE TIME:" + (SystemClock.uptimeMillis() - startTime));
-
                         requestRender();
                         computing.set(false);
                     }

@@ -12,7 +12,6 @@ import android.util.Size;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.app.env.Logger;
 import ai.fritz.app.ml.Classifier;
 import ai.fritz.app.ml.TensorFlowImageClassifier;
 import ai.fritz.app.ui.ResultsView;
@@ -21,7 +20,6 @@ import ai.fritz.vision.inputs.FritzVisionOrientation;
 
 
 public class CustomTFMobileActivity extends BaseCameraActivity implements OnImageAvailableListener {
-    private static final Logger LOGGER = new Logger();
 
     private static final String TAG = CustomTFMobileActivity.class.getSimpleName();
 
@@ -44,7 +42,7 @@ public class CustomTFMobileActivity extends BaseCameraActivity implements OnImag
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 
-    private FritzVisionOrientation orientation;
+    private int imageRotation;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -64,7 +62,7 @@ public class CustomTFMobileActivity extends BaseCameraActivity implements OnImag
 
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
-        orientation = FritzVisionOrientation.getImageOrientationFromCamera(this, cameraId);
+        imageRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
 
         classifier =
                 TensorFlowImageClassifier.create(
@@ -92,8 +90,7 @@ public class CustomTFMobileActivity extends BaseCameraActivity implements OnImag
             return;
         }
 
-        final FritzVisionImage fritzImage = FritzVisionImage.fromMediaImage(image);
-        fritzImage.setOrientation(orientation);
+        final FritzVisionImage fritzImage = FritzVisionImage.fromMediaImage(image, imageRotation);
         image.close();
 
         runInBackground(
@@ -101,9 +98,10 @@ public class CustomTFMobileActivity extends BaseCameraActivity implements OnImag
                     @Override
                     public void run() {
                         final long startTime = SystemClock.uptimeMillis();
-                        Bitmap resizedBitmap = fritzImage.resize(INPUT_SIZE, INPUT_SIZE);
+                        fritzImage.resize(INPUT_SIZE, INPUT_SIZE);
+                        Bitmap resizedBitmap = fritzImage.getBitmap();
                         final List<Classifier.Recognition> results = classifier.recognizeImage(resizedBitmap);
-                        LOGGER.i("Detect: %s", results);
+                        Log.d(TAG, "Detect: " + results);
                         if (resultsView == null) {
                             resultsView = (ResultsView) findViewById(R.id.results);
                         }
