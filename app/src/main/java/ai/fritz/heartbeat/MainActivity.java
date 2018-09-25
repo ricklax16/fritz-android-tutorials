@@ -1,6 +1,8 @@
 package ai.fritz.heartbeat;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +29,8 @@ import io.fabric.sdk.android.Fabric;
  * The primary activity that shows the different model demos.
  */
 public class MainActivity extends AppCompatActivity {
+
+    private static final String FRITZ_URL = "https://fritz.ai";
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -107,6 +111,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         logger.info("FRITZ CUSTOM TFLITE");
                         Navigation.goToTFLite(v.getContext());
+                    }
+                }));
+        demoItems.add(new DemoItem(
+                getString(R.string.fritz_info_title),
+                getString(R.string.fritz_info_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(FRITZ_URL));
+                        startActivity(i);
                     }
                 }));
         return demoItems;
