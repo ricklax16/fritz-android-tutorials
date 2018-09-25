@@ -2,14 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'HeartbeatReleaseKey'
-            keyPassword '7Dde3y&LXYME8N6BK;[>'
-            storeFile file('/Users/erichsiao/dev/Heartbeat/android.jks')
-            storePassword 'Jy7oRVbh^jXucPc'
-        }
-    }
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
