@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Heartbeat</string>
     <!-- In the MainActivity -->
-    <string name="demo_title">MODELS</string>
+    <string name="demo_title">Heartbeat</string>
 
     <string name="fritz_vision_style_transfer">Style Transfer</string>
     <string name="fritz_vision_style_transfer_description">Run style transfer on live video feed.</string>
@@ -15,7 +15,13 @@
     
     <string name="fritz_customtflite_title">Custom TFLite Model</string>
     <string name="fritz_customtflite_description">Uses a TFLite model to identify handwritten numbers.</string>
-    
+
+    <string name="fritz_handwriting_detection">Handwriting Detection</string>
+    <string name="fritz_handwriting_detection_description">Detects numbers from 0-9. Draw a number on the canvas and guess what it is.</string>
+
+    <string name="fritz_info_title">Learn More About Fritz</string>
+    <string name="fritz_info_description">Want to add these machine learning features to your app? Check out our SDK for more details.</string>
+
     <string name="fritz_object_detection_title">Object Detection Feature</string>
     <string name="fritz_object_detection_description">Detect objects in an image and label them</string>
 

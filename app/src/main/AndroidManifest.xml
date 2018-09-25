@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ai.fritz.app">
+    package="ai.fritz.heartbeat">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="ai.fritz.app.SplashActivity"
+            android:name="ai.fritz.heartbeat.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,25 +28,22 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="ai.fritz.app.MainActivity" />
+        <activity android:name="ai.fritz.heartbeat.MainActivity" />
         <activity
-            android:name="ai.fritz.app.StyleActivity"
-            android:parentActivityName="ai.fritz.app.MainActivity" />
+            android:name="ai.fritz.heartbeat.StyleActivity"
+            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
         <activity
-            android:name="ai.fritz.app.LiveVideoActivity"
-            android:parentActivityName="ai.fritz.app.MainActivity" />
+            android:name="ai.fritz.heartbeat.LiveVideoActivity"
+            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
         <activity
-            android:name="ai.fritz.app.VisionActivity"
-            android:parentActivityName="ai.fritz.app.MainActivity" />
+            android:name="ai.fritz.heartbeat.VisionActivity"
+            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
         <activity
-            android:name="ai.fritz.app.CustomTFMobileActivity"
-            android:parentActivityName="ai.fritz.app.MainActivity" />
+            android:name="ai.fritz.heartbeat.CustomTFLiteActivity"
+            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
         <activity
-            android:name="ai.fritz.app.CustomTFLiteActivity"
-            android:parentActivityName="ai.fritz.app.MainActivity" />
-        <activity
-            android:name="ai.fritz.app.DetectorActivity"
-            android:parentActivityName="ai.fritz.app.MainActivity" />
+            android:name="ai.fritz.heartbeat.DetectorActivity"
+            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
 
         <meta-data
             android:name="fritz_api_key"
