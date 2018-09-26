@@ -1,4 +1,4 @@
-Fritz Heartbeat App
+Heartbeat By Fritz
 ===================
 
 [ ![Codeship Status for fritzlabs/fritz-sdk-android](https://app.codeship.com/projects/c74152e0-65d1-0136-2d69-32e87736c6c6/status?branch=master)](https://app.codeship.com/projects/297281)
@@ -6,7 +6,9 @@ Fritz Heartbeat App
 
 Fritz is a free end-to-end platform that allows you to create machine-learning-powered features in your mobile apps with ease. Build unique, compelling user experiences using ML technology like image labeling, object detection, and more.
 
-## Installation
+Heartbeat By Fritz is also available on the [Google Play Store] (https://play.google.com/store/apps/details?id=ai.fritz.heartbeat)
+
+## Setup a Fritz account
 
 [Android SDK instructions](https://docs.fritz.ai/get-started.html#android)
 
