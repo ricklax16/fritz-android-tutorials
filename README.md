@@ -6,7 +6,7 @@ Heartbeat By Fritz
 
 Fritz is a free end-to-end platform that allows you to create machine-learning-powered features in your mobile apps with ease. Build unique, compelling user experiences using ML technology like image labeling, object detection, and more.
 
-Heartbeat By Fritz is also available on the [Google Play Store] (https://play.google.com/store/apps/details?id=ai.fritz.heartbeat)
+Heartbeat By Fritz is also available on the [Google Play Store](https://play.google.com/store/apps/details?id=ai.fritz.heartbeat)
 
 ## Setup a Fritz account
 
