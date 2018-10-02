@@ -114,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
         demoItems.add(new DemoItem(
+                getString(R.string.fritz_vision_img_seg_title),
+                getString(R.string.fritz_vision_img_seg_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.goToImageSegmentation(v.getContext());
+                    }
+                }));
+        demoItems.add(new DemoItem(
                 getString(R.string.fritz_info_title),
                 getString(R.string.fritz_info_description),
                 new View.OnClickListener() {

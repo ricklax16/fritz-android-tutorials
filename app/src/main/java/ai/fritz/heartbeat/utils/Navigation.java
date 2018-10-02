@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ai.fritz.heartbeat.DetectorActivity;
+import ai.fritz.heartbeat.ImageSegmentationActivity;
 import ai.fritz.heartbeat.LiveVideoActivity;
 import ai.fritz.heartbeat.CustomTFLiteActivity;
 import ai.fritz.heartbeat.StyleActivity;
@@ -38,5 +39,10 @@ public class Navigation {
     public static void goToStyleTransfer(Context context) {
         Intent styleActivity = new Intent(context, StyleActivity.class);
         context.startActivity(styleActivity);
+    }
+
+    public static void goToImageSegmentation(Context context) {
+        Intent imgSegActivity = new Intent(context, ImageSegmentationActivity.class);
+        context.startActivity(imgSegActivity);
     }
 }
