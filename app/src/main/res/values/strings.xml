@@ -25,6 +25,9 @@
     <string name="fritz_object_detection_title">Object Detection Feature</string>
     <string name="fritz_object_detection_description">Detect objects in an image and label them</string>
 
+    <string name="fritz_vision_img_seg_title">Image Segmentation</string>
+    <string name="fritz_vision_img_seg_description">Identify and highlight the people in an image. Note, this runs at about 1 frame per second.</string>
+
     <string name="mnist_title">MNIST</string>
     <string name="mnist_description">Classic MNIST handwriting recognizer for digits 0&#8211;9</string>
     <string name="picture">Picture</string>
