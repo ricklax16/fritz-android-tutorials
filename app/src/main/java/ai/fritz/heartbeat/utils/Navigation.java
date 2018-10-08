@@ -15,12 +15,6 @@ import ai.fritz.heartbeat.VisionActivity;
  */
 public class Navigation {
 
-
-    public static void goToFritzVision(Context context) {
-        Intent fritzVision = new Intent(context, VisionActivity.class);
-        context.startActivity(fritzVision);
-    }
-
     public static void goToTFLite(Context context) {
         Intent tflite = new Intent(context, CustomTFLiteActivity.class);
         context.startActivity(tflite);

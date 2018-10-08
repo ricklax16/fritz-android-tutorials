@@ -9,14 +9,18 @@ import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
 import android.util.Size;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.fritzvisionsegmentation.FritzVisionSegment;
 import ai.fritz.fritzvisionsegmentation.FritzVisionSegmentPredictor;
+import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.peoplesegmentation.FritzVisionPeopleSegmentPredictor;
 import ai.fritz.vision.inputs.FritzVisionImage;
 import ai.fritz.vision.inputs.FritzVisionOrientation;
@@ -39,6 +43,15 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
 
     List<FritzVisionSegment> segments = new ArrayList<>();
     Bitmap copiedBitmap;
+    FritzVisionImage visionImage;
+
+    Button snapshotButton;
+    RelativeLayout previewLayout;
+    RelativeLayout snapshotLayout;
+    OverlayView snapshotOverlay;
+    ProgressBar spinner;
+
+    Button closeButton;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,7 +62,7 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
 
     @Override
     protected int getLayoutId() {
-        return R.layout.camera_connection_fragment_stylize;
+        return R.layout.camera_connection_snapshot;
     }
 
     @Override
@@ -61,30 +74,111 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
         imgRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
         predictor = new FritzVisionPeopleSegmentPredictor(this);
+        snapshotButton = findViewById(R.id.take_picture_btn);
+        previewLayout = findViewById(R.id.preview_frame);
+        snapshotLayout = findViewById(R.id.snapshot_frame);
+        snapshotOverlay = findViewById(R.id.snapshot_view);
+        closeButton = findViewById(R.id.close_btn);
+        spinner = findViewById(R.id.spinner);
+
+        if (snapshotOverlay != null) {
+            snapshotOverlay.addCallback(new OverlayView.DrawCallback() {
+                @Override
+                public void drawCallback(final Canvas canvas) {
+                    if (segments.size() > 0) {
+                        Bitmap scaledBitmap = FritzVisionImage.scale(copiedBitmap, cameraSize.getWidth(), cameraSize.getHeight());
+                        canvas.drawBitmap(scaledBitmap, new Matrix(), new Paint());
+
+                        float scaledHeight = ((float) scaledBitmap.getHeight()) / copiedBitmap.getHeight();
+                        float scaledWidth = ((float) scaledBitmap.getWidth()) / copiedBitmap.getWidth();
+
+                        for (FritzVisionSegment segment : segments) {
+                            RectF boxScaled = new RectF(segment.getScaledBox().left * scaledWidth, segment.getScaledBox().top * scaledHeight, segment.getScaledBox().right * scaledWidth, segment.getScaledBox().bottom * scaledHeight);
+                            Paint paint = new Paint();
+                            paint.setColor(segment.getSegmentationClass().getColorIdentifier());
+                            paint.setAlpha(100);
+                            paint.setStyle(Paint.Style.FILL);
+
+                            canvas.drawRect(boxScaled, paint);
+                        }
+                    }
+                }
+            });
+        }
 
         addCallback(
                 new OverlayView.DrawCallback() {
                     @Override
                     public void drawCallback(final Canvas canvas) {
-                        if (segments.size() > 0) {
+                        if (copiedBitmap != null) {
                             Bitmap scaledBitmap = FritzVisionImage.scale(copiedBitmap, cameraSize.getWidth(), cameraSize.getHeight());
                             canvas.drawBitmap(scaledBitmap, new Matrix(), new Paint());
-
-                            float scaledHeight = ((float) scaledBitmap.getHeight()) / copiedBitmap.getHeight();
-                            float scaledWidth = ((float) scaledBitmap.getWidth()) / copiedBitmap.getWidth();
-
-                            for (FritzVisionSegment segment : segments) {
-                                RectF boxScaled = new RectF(segment.getScaledBox().left * scaledWidth, segment.getScaledBox().top * scaledHeight, segment.getScaledBox().right * scaledWidth, segment.getScaledBox().bottom * scaledHeight);
-                                Paint paint = new Paint();
-                                paint.setColor(segment.getSegmentationClass().getColorIdentifier());
-                                paint.setAlpha(100);
-                                paint.setStyle(Paint.Style.FILL);
-
-                                canvas.drawRect(boxScaled, paint);
-                            }
                         }
                     }
                 });
+
+        snapshotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!computing.compareAndSet(false, true)) {
+                    return;
+                }
+
+                runInBackground(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                copiedBitmap = visionImage.getBitmap();
+                                showSpinner();
+                                segments = predictor.predict(visionImage);
+                                showSnapshotLayout();
+                                hideSpinner();
+                                snapshotOverlay.postInvalidate();
+                                computing.set(false);
+                            }
+                        });
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPreviewLayout();
+            }
+        });
+    }
+
+    private void showSpinner() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                spinner.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void hideSpinner() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                spinner.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void showSnapshotLayout() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                previewLayout.setVisibility(View.GONE);
+                snapshotLayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void showPreviewLayout() {
+        previewLayout.setVisibility(View.VISIBLE);
+        snapshotLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -95,23 +189,16 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
             return;
         }
 
-        if (!computing.compareAndSet(false, true)) {
+        if (computing.get()) {
             image.close();
+            requestRender();
             return;
         }
 
-        final FritzVisionImage visionImage = FritzVisionImage.fromMediaImage(image, imgRotation);
+        visionImage = FritzVisionImage.fromMediaImage(image, imgRotation);
+        copiedBitmap = visionImage.getBitmap();
         image.close();
 
-        runInBackground(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        copiedBitmap = visionImage.getBitmap();
-                        segments = predictor.predict(visionImage);
-                        requestRender();
-                        computing.set(false);
-                    }
-                });
+        requestRender();
     }
 }
