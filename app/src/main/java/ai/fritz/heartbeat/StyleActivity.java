@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import ai.fritz.fritzvisionstyle.ArtisticStyle;
+import ai.fritz.fritzvisionstyle.FritzStyleResolution;
+import ai.fritz.fritzvisionstyle.FritzVisionStylePredictor;
+import ai.fritz.fritzvisionstyle.FritzVisionStylePredictorOptions;
+import ai.fritz.fritzvisionstyle.FritzVisionStyleResult;
+import ai.fritz.fritzvisionstyle.FritzVisionStyleTransfer;
+import ai.fritz.fritzvisionstylepaintings.PaintingStyles;
 import ai.fritz.heartbeat.ui.OverlayView;
-import ai.fritz.fritzvisionstylemodel.ArtisticStyle;
-import ai.fritz.fritzvisionstylemodel.FritzStyleResolution;
-import ai.fritz.fritzvisionstylemodel.FritzVisionStylePredictor;
-import ai.fritz.fritzvisionstylemodel.FritzVisionStylePredictorOptions;
-import ai.fritz.fritzvisionstylemodel.FritzVisionStyleTransfer;
 import ai.fritz.vision.inputs.FritzVisionImage;
 import ai.fritz.vision.inputs.FritzVisionOrientation;
 
@@ -30,9 +32,8 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 
-    private FritzVisionImage styledImage;
-
     private FritzVisionStylePredictor predictor;
+    private FritzVisionStyleResult styledImageResult;
     private FritzVisionStylePredictorOptions options;
 
     private OverlayView overlayView;
@@ -60,20 +61,17 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
         options = new FritzVisionStylePredictorOptions.Builder()
                 .imageResolution(FritzStyleResolution.NORMAL)
                 .build();
-        ArtisticStyle[] styles = ArtisticStyle.values();
-        predictor = FritzVisionStyleTransfer.getPredictor(this, styles[activeStyleIndex], options);
+        assignPredictor();
 
         imageRotationFromCamera = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
-
         overlayView = findViewById(R.id.debug_overlay);
 
         addCallback(
                 new OverlayView.DrawCallback() {
                     @Override
                     public void drawCallback(final Canvas canvas) {
-                        if (styledImage != null) {
-                            styledImage.scale(cameraViewSize.getWidth(), cameraViewSize.getHeight());
-                            styledImage.drawOnCanvas(canvas);
+                        if (styledImageResult != null) {
+                            styledImageResult.drawToCanvas(canvas, cameraViewSize);
                         }
                     }
                 });
@@ -86,13 +84,18 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
         });
     }
 
+    private void assignPredictor() {
+        ArtisticStyle[] styles = PaintingStyles.getAll();
+        predictor = FritzVisionStyleTransfer.getPredictor(styles[activeStyleIndex], options);
+    }
+
     private void getNextPredictor() {
-        ArtisticStyle[] styles = ArtisticStyle.values();
+        ArtisticStyle[] styles = PaintingStyles.getAll();
         activeStyleIndex = ++activeStyleIndex % styles.length;
 
         Toast.makeText(this,
-                styles[activeStyleIndex].name() + " Style Shown", Toast.LENGTH_LONG).show();
-        predictor = FritzVisionStyleTransfer.getPredictor(this, styles[activeStyleIndex], options);
+                styles[activeStyleIndex].getName() + " Style Shown", Toast.LENGTH_LONG).show();
+        predictor = FritzVisionStyleTransfer.getPredictor(styles[activeStyleIndex], options);
     }
 
     @Override
@@ -117,7 +120,7 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
                     @Override
                     public void run() {
                         final long startTime = SystemClock.uptimeMillis();
-                        styledImage = predictor.predict(fritzImage);
+                        styledImageResult = predictor.predict(fritzImage);
                         Log.d(TAG, "INFERENCE TIME:" + (SystemClock.uptimeMillis() - startTime));
                         requestRender();
                         computing.set(false);

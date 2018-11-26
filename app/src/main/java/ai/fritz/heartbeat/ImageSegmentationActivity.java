@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
@@ -14,12 +13,11 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.fritzvisionsegmentation.FritzVisionSegment;
+import ai.fritz.core.utils.BitmapUtils;
 import ai.fritz.fritzvisionsegmentation.FritzVisionSegmentPredictor;
+import ai.fritz.fritzvisionsegmentation.FritzVisionSegmentResult;
 import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.peoplesegmentation.FritzVisionPeopleSegmentPredictor;
 import ai.fritz.vision.inputs.FritzVisionImage;
@@ -41,9 +39,8 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     private FritzVisionSegmentPredictor predictor;
     private int imgRotation;
 
-    List<FritzVisionSegment> segments = new ArrayList<>();
-    Bitmap copiedBitmap;
-    FritzVisionImage visionImage;
+    private FritzVisionSegmentResult segmentResult;
+    private FritzVisionImage visionImage;
 
     Button snapshotButton;
     RelativeLayout previewLayout;
@@ -73,7 +70,7 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
         imgRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
-        predictor = new FritzVisionPeopleSegmentPredictor(this);
+        predictor = new FritzVisionPeopleSegmentPredictor();
         snapshotButton = findViewById(R.id.take_picture_btn);
         previewLayout = findViewById(R.id.preview_frame);
         snapshotLayout = findViewById(R.id.snapshot_frame);
@@ -85,22 +82,9 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
             snapshotOverlay.addCallback(new OverlayView.DrawCallback() {
                 @Override
                 public void drawCallback(final Canvas canvas) {
-                    if (segments.size() > 0) {
-                        Bitmap scaledBitmap = FritzVisionImage.scale(copiedBitmap, cameraSize.getWidth(), cameraSize.getHeight());
-                        canvas.drawBitmap(scaledBitmap, new Matrix(), new Paint());
-
-                        float scaledHeight = ((float) scaledBitmap.getHeight()) / copiedBitmap.getHeight();
-                        float scaledWidth = ((float) scaledBitmap.getWidth()) / copiedBitmap.getWidth();
-
-                        for (FritzVisionSegment segment : segments) {
-                            RectF boxScaled = new RectF(segment.getScaledBox().left * scaledWidth, segment.getScaledBox().top * scaledHeight, segment.getScaledBox().right * scaledWidth, segment.getScaledBox().bottom * scaledHeight);
-                            Paint paint = new Paint();
-                            paint.setColor(segment.getSegmentationClass().getColorIdentifier());
-                            paint.setAlpha(100);
-                            paint.setStyle(Paint.Style.FILL);
-
-                            canvas.drawRect(boxScaled, paint);
-                        }
+                    if (segmentResult != null) {
+                        segmentResult.drawVisionImage(canvas, cameraSize);
+                        segmentResult.drawAllMasks(canvas, 100, cameraSize);
                     }
                 }
             });
@@ -110,8 +94,8 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
                 new OverlayView.DrawCallback() {
                     @Override
                     public void drawCallback(final Canvas canvas) {
-                        if (copiedBitmap != null) {
-                            Bitmap scaledBitmap = FritzVisionImage.scale(copiedBitmap, cameraSize.getWidth(), cameraSize.getHeight());
+                        if (visionImage != null) {
+                            Bitmap scaledBitmap = BitmapUtils.scale(visionImage.getBitmap(), cameraSize.getWidth(), cameraSize.getHeight());
                             canvas.drawBitmap(scaledBitmap, new Matrix(), new Paint());
                         }
                     }
@@ -128,9 +112,8 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
                         new Runnable() {
                             @Override
                             public void run() {
-                                copiedBitmap = visionImage.getBitmap();
                                 showSpinner();
-                                segments = predictor.predict(visionImage);
+                                segmentResult = predictor.predict(visionImage);
                                 showSnapshotLayout();
                                 hideSpinner();
                                 snapshotOverlay.postInvalidate();
@@ -196,7 +179,6 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
         }
 
         visionImage = FritzVisionImage.fromMediaImage(image, imgRotation);
-        copiedBitmap = visionImage.getBitmap();
         image.close();
 
         requestRender();
