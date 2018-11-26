@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictor;
+import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectResult;
 import ai.fritz.vision.FritzVisionObject;
 import ai.fritz.vision.inputs.FritzVisionImage;
 import butterknife.BindView;
@@ -42,6 +43,7 @@ public class VisionActivity extends AppCompatActivity {
     Button selectPhotoBtn;
 
     FritzVisionObjectPredictor predictor;
+    FritzVisionObjectResult objectResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class VisionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fritz_vision);
         setTitle(R.string.fritz_vision_title);
         ButterKnife.bind(this);
-        predictor = FritzVisionObjectPredictor.getInstance(this);
+        predictor = new FritzVisionObjectPredictor();
 
         setSupportActionBar(appBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,10 +81,10 @@ public class VisionActivity extends AppCompatActivity {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 FritzVisionImage visionImage = FritzVisionImage.fromBitmap(selectedImage);
-                List<FritzVisionObject> labels = predictor.predict(visionImage);
+                objectResult = predictor.predict(visionImage);
                 imagePreview.setImageBitmap(visionImage.getBitmap());
 
-                resultView.setText(createTextFromList(labels));
+                resultView.setText(createTextFromList(objectResult.getVisionObjects()));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

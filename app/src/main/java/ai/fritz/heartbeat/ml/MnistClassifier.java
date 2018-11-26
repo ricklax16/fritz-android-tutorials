@@ -1,21 +1,17 @@
 package ai.fritz.heartbeat.ml;
 
 import android.app.Activity;
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.util.Log;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 
-import ai.fritz.heartbeat.R;
-import ai.fritz.core.ModelSettings;
+import ai.fritz.core.CustomModel;
 import ai.fritz.customtflite.FritzTFLiteInterpreter;
+import ai.fritz.heartbeat.R;
 
 
 public class MnistClassifier {
@@ -48,12 +44,7 @@ public class MnistClassifier {
 
     public MnistClassifier(Activity activity) {
         try {
-            tflite = FritzTFLiteInterpreter.create(activity,
-                    new ModelSettings.Builder()
-                            .modelId(activity.getString(R.string.tflite_model_id))
-                            .modelPath(MODEL_PATH)
-                            .modelVersion(1)
-                            .build());
+            tflite = FritzTFLiteInterpreter.create(new CustomModel(MODEL_PATH, activity.getString(R.string.tflite_model_id), 1));
             imgData =
                     ByteBuffer.allocateDirect(
                             BYTE_SIZE_OF_FLOAT * DIM_BATCH_SIZE * DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y * DIM_PIXEL_SIZE);
@@ -93,6 +84,7 @@ public class MnistClassifier {
 
     /**
      * Go through the output and find the number that was identified.
+     *
      * @return the number that was identified (returns -1 if one wasn't found)
      */
     private int getResult() {
@@ -108,6 +100,7 @@ public class MnistClassifier {
 
     /**
      * Converts it into the Byte Buffer to feed into the model
+     *
      * @param bitmap
      */
     private void convertBitmapToByteBuffer(Bitmap bitmap) {

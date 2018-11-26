@@ -1,6 +1,5 @@
 package ai.fritz.heartbeat;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.media.Image;
 import android.media.ImageReader;
@@ -9,14 +8,12 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictorOptions;
-import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictor;
-import ai.fritz.vision.FritzVisionObject;
+import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictorOptions;
+import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectResult;
+import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.vision.inputs.FritzVisionImage;
 import ai.fritz.vision.inputs.FritzVisionOrientation;
 
@@ -35,29 +32,22 @@ public class DetectorActivity extends BaseCameraActivity implements OnImageAvail
 
     private int imageRotation;
 
-    Bitmap originalBitmap;
     private FritzVisionImage fritzVisionImage;
-    private List<FritzVisionObject> objects = new ArrayList<>();
+    private FritzVisionObjectResult objectResult;
 
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
         imageRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
         FritzVisionObjectPredictorOptions options = new FritzVisionObjectPredictorOptions.Builder()
                 .confidenceThreshold(.6f).build();
-        objectPredictor = FritzVisionObjectPredictor.getInstance(this, options);
+        objectPredictor = new FritzVisionObjectPredictor(options);
 
         addCallback(
                 new OverlayView.DrawCallback() {
                     @Override
                     public void drawCallback(final Canvas canvas) {
-                        if (originalBitmap != null) {
-                            // For displaying the preview / original bitmap that we ran prediction on (uncomment below)
-//                             canvas.drawBitmap(originalBitmap, new Matrix(), new Paint());
-                            float scaleFactorWidth = ((float) cameraSize.getWidth()) / originalBitmap.getWidth();
-                            float scaleFactorHeight = ((float) cameraSize.getHeight()) / originalBitmap.getHeight();
-                            for (FritzVisionObject object : objects) {
-                                object.drawOnCanvas(getApplicationContext(), canvas, scaleFactorWidth, scaleFactorHeight);
-                            }
+                        if (objectResult != null) {
+                            objectResult.drawBoundingBoxes(canvas, cameraSize);
                         }
                     }
                 });
@@ -83,9 +73,8 @@ public class DetectorActivity extends BaseCameraActivity implements OnImageAvail
                 new Runnable() {
                     @Override
                     public void run() {
-                        originalBitmap = fritzVisionImage.copyBitmap();
                         final long startTime = SystemClock.uptimeMillis();
-                        objects = objectPredictor.predict(fritzVisionImage);
+                        objectResult = objectPredictor.predict(fritzVisionImage);
                         Log.d(TAG, "INFERENCE TIME:" + (SystemClock.uptimeMillis() - startTime));
 
                         requestRender();
