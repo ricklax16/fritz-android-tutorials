@@ -72,17 +72,6 @@ public class MainActivity extends AppCompatActivity {
     private List<DemoItem> getDemoItems() {
         // Add different demo items here
         List<DemoItem> demoItems = new ArrayList<>();
-
-        demoItems.add(new DemoItem(
-                getString(R.string.fritz_vision_style_transfer),
-                getString(R.string.fritz_vision_style_transfer_description),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        logger.info("FRITZ VISION STYLE TRANSFER");
-                        Navigation.goToStyleTransfer(v.getContext());
-                    }
-                }));
         demoItems.add(new DemoItem(
                 getString(R.string.fritz_vision_title),
                 getString(R.string.fritz_vision_description_live_video),
@@ -104,13 +93,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
         demoItems.add(new DemoItem(
-                getString(R.string.fritz_handwriting_detection),
-                getString(R.string.fritz_handwriting_detection_description),
+                getString(R.string.fritz_vision_style_transfer),
+                getString(R.string.fritz_vision_style_transfer_description),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        logger.info("FRITZ CUSTOM TFLITE");
-                        Navigation.goToTFLite(v.getContext());
+                        logger.info("FRITZ VISION STYLE TRANSFER");
+                        Navigation.goToStyleTransfer(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(

@@ -59,7 +59,7 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
     @Override
     public void onPreviewSizeChosen(final Size previewSize, final Size cameraViewSize, final int rotation) {
         options = new FritzVisionStylePredictorOptions.Builder()
-                .imageResolution(FritzStyleResolution.NORMAL)
+                .imageResolution(FritzStyleResolution.HIGH)
                 .build();
         assignPredictor();
 

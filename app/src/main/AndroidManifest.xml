@@ -45,10 +45,6 @@
             android:parentActivityName="ai.fritz.heartbeat.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ai.fritz.heartbeat.CustomTFLiteActivity"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="ai.fritz.heartbeat.DetectorActivity"
             android:screenOrientation="portrait"
             android:parentActivityName="ai.fritz.heartbeat.MainActivity" />

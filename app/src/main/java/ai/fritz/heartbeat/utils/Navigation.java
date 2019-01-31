@@ -6,19 +6,12 @@ import android.content.Intent;
 import ai.fritz.heartbeat.DetectorActivity;
 import ai.fritz.heartbeat.ImageSegmentationActivity;
 import ai.fritz.heartbeat.LiveVideoActivity;
-import ai.fritz.heartbeat.CustomTFLiteActivity;
 import ai.fritz.heartbeat.StyleActivity;
-import ai.fritz.heartbeat.VisionActivity;
 
 /**
  * Navigation is a helper class for common links throughout the app.
  */
 public class Navigation {
-
-    public static void goToTFLite(Context context) {
-        Intent tflite = new Intent(context, CustomTFLiteActivity.class);
-        context.startActivity(tflite);
-    }
 
     public static void goToLiveVideoFritzLabel(Context context) {
         Intent liveVideoActivity = new Intent(context, LiveVideoActivity.class);
