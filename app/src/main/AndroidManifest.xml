@@ -41,10 +41,6 @@
             android:parentActivityName="ai.fritz.heartbeat.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ai.fritz.heartbeat.VisionActivity"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="ai.fritz.heartbeat.DetectorActivity"
             android:screenOrientation="portrait"
             android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
@@ -57,7 +53,7 @@
             android:name="fritz_api_key"
             android:value="@string/fritz_api_key" />
         <service
-            android:name="ai.fritz.core.FritzJob"
+            android:name="ai.fritz.core.FritzCustomModelService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

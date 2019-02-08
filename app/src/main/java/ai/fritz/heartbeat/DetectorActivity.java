@@ -10,12 +10,15 @@ import android.util.Size;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictor;
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictorOptions;
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectResult;
+import ai.fritz.core.FritzOnDeviceModel;
+import ai.fritz.fritzvisionobjectmodel.ObjectDetectionOnDeviceModel;
 import ai.fritz.heartbeat.ui.OverlayView;
-import ai.fritz.vision.inputs.FritzVisionImage;
-import ai.fritz.vision.inputs.FritzVisionOrientation;
+import ai.fritz.vision.FritzVision;
+import ai.fritz.vision.FritzVisionImage;
+import ai.fritz.vision.FritzVisionOrientation;
+import ai.fritz.vision.options.FritzVisionObjectPredictorOptions;
+import ai.fritz.vision.outputs.FritzVisionObjectResult;
+import ai.fritz.vision.predictors.FritzVisionObjectPredictor;
 
 /**
  * Detects different objects in the image.
@@ -40,7 +43,8 @@ public class DetectorActivity extends BaseCameraActivity implements OnImageAvail
         imageRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
         FritzVisionObjectPredictorOptions options = new FritzVisionObjectPredictorOptions.Builder()
                 .confidenceThreshold(.6f).build();
-        objectPredictor = new FritzVisionObjectPredictor(options);
+        FritzOnDeviceModel onDeviceModel = new ObjectDetectionOnDeviceModel();
+        objectPredictor = FritzVision.ObjectDetection.getPredictor(onDeviceModel, options);
 
         addCallback(
                 new OverlayView.DrawCallback() {

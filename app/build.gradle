@@ -46,11 +46,10 @@ dependencies {
     implementation "ai.fritz:core:${sdk_version}"
     implementation "ai.fritz:custom-model-tfmobile:${sdk_version}"
     implementation "ai.fritz:custom-model-tflite:${sdk_version}"
-    implementation "ai.fritz:vision-label:${sdk_version}"
-    implementation "ai.fritz:vision-object:${sdk_version}"
-    implementation "ai.fritz:vision-style:${sdk_version}"
-    implementation "ai.fritz:vision-style-paintings:${sdk_version}"
-    implementation "ai.fritz:vision-people-segment:${sdk_version}"
+    implementation "ai.fritz:vision-image-label-model:${sdk_version}"
+    implementation "ai.fritz:vision-object-detection-model:${sdk_version}"
+    implementation "ai.fritz:vision-style-painting-models:${sdk_version}"
+    implementation "ai.fritz:vision-people-segmentation-model:${sdk_version}"
 
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
