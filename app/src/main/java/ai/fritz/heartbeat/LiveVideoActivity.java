@@ -10,11 +10,14 @@ import android.util.Size;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import ai.fritz.core.FritzOnDeviceModel;
 import ai.fritz.heartbeat.ui.ResultsView;
-import ai.fritz.vision.inputs.FritzVisionImage;
-import ai.fritz.vision.inputs.FritzVisionOrientation;
-import ai.fritz.visionlabel.FritzVisionLabelPredictor;
-import ai.fritz.visionlabel.FritzVisionLabelResult;
+import ai.fritz.vision.FritzVision;
+import ai.fritz.vision.FritzVisionImage;
+import ai.fritz.vision.FritzVisionOrientation;
+import ai.fritz.vision.outputs.FritzVisionLabelResult;
+import ai.fritz.vision.predictors.FritzVisionLabelPredictor;
+import ai.fritz.visionlabel.ImageLabelOnDeviceModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,7 +62,8 @@ public class LiveVideoActivity extends BaseCameraActivity implements ImageReader
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
         imgRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
-        predictor = new FritzVisionLabelPredictor();
+        FritzOnDeviceModel onDeviceModel = new ImageLabelOnDeviceModel();
+        predictor = FritzVision.ImageLabeling.getPredictor(onDeviceModel);
     }
 
     @Override

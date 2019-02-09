@@ -16,12 +16,14 @@ import android.widget.RelativeLayout;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import ai.fritz.core.utils.BitmapUtils;
-import ai.fritz.fritzvisionsegmentation.FritzVisionSegmentPredictor;
-import ai.fritz.fritzvisionsegmentation.FritzVisionSegmentResult;
 import ai.fritz.heartbeat.ui.OverlayView;
-import ai.fritz.peoplesegmentation.FritzVisionPeopleSegmentPredictor;
-import ai.fritz.vision.inputs.FritzVisionImage;
-import ai.fritz.vision.inputs.FritzVisionOrientation;
+import ai.fritz.peoplesegmentation.PeopleSegmentOnDeviceModel;
+import ai.fritz.vision.FritzVision;
+import ai.fritz.vision.FritzVisionImage;
+import ai.fritz.vision.FritzVisionOrientation;
+import ai.fritz.vision.models.SegmentOnDeviceModel;
+import ai.fritz.vision.outputs.FritzVisionSegmentResult;
+import ai.fritz.vision.predictors.FritzVisionSegmentPredictor;
 import butterknife.ButterKnife;
 
 
@@ -70,7 +72,8 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
         imgRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
-        predictor = new FritzVisionPeopleSegmentPredictor();
+        SegmentOnDeviceModel onDeviceModel = new PeopleSegmentOnDeviceModel();
+        predictor = FritzVision.ImageSegmentation.getPredictor(onDeviceModel);
         snapshotButton = findViewById(R.id.take_picture_btn);
         previewLayout = findViewById(R.id.preview_frame);
         snapshotLayout = findViewById(R.id.snapshot_frame);

@@ -13,16 +13,16 @@ import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.fritzvisionstyle.ArtisticStyle;
-import ai.fritz.fritzvisionstyle.FritzStyleResolution;
-import ai.fritz.fritzvisionstyle.FritzVisionStylePredictor;
-import ai.fritz.fritzvisionstyle.FritzVisionStylePredictorOptions;
-import ai.fritz.fritzvisionstyle.FritzVisionStyleResult;
-import ai.fritz.fritzvisionstyle.FritzVisionStyleTransfer;
 import ai.fritz.fritzvisionstylepaintings.PaintingStyles;
 import ai.fritz.heartbeat.ui.OverlayView;
-import ai.fritz.vision.inputs.FritzVisionImage;
-import ai.fritz.vision.inputs.FritzVisionOrientation;
+import ai.fritz.vision.FritzVision;
+import ai.fritz.vision.FritzVisionImage;
+import ai.fritz.vision.FritzVisionOrientation;
+import ai.fritz.vision.models.StyleOnDeviceModel;
+import ai.fritz.vision.options.FritzStyleResolution;
+import ai.fritz.vision.options.FritzVisionStylePredictorOptions;
+import ai.fritz.vision.outputs.FritzVisionStyleResult;
+import ai.fritz.vision.predictors.FritzVisionStylePredictor;
 
 
 public class StyleActivity extends BaseCameraActivity implements OnImageAvailableListener {
@@ -85,17 +85,17 @@ public class StyleActivity extends BaseCameraActivity implements OnImageAvailabl
     }
 
     private void assignPredictor() {
-        ArtisticStyle[] styles = PaintingStyles.getAll();
-        predictor = FritzVisionStyleTransfer.getPredictor(styles[activeStyleIndex], options);
+        StyleOnDeviceModel[] styles = PaintingStyles.getAll();
+        predictor = FritzVision.StyleTransfer.getPredictor(styles[activeStyleIndex], options);
     }
 
     private void getNextPredictor() {
-        ArtisticStyle[] styles = PaintingStyles.getAll();
+        StyleOnDeviceModel[] styles = PaintingStyles.getAll();
         activeStyleIndex = ++activeStyleIndex % styles.length;
 
         Toast.makeText(this,
                 styles[activeStyleIndex].getName() + " Style Shown", Toast.LENGTH_LONG).show();
-        predictor = FritzVisionStyleTransfer.getPredictor(styles[activeStyleIndex], options);
+        predictor = FritzVision.StyleTransfer.getPredictor(styles[activeStyleIndex], options);
     }
 
     @Override
