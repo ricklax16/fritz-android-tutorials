@@ -28,6 +28,18 @@
     <string name="fritz_vision_img_seg_title">Image Segmentation</string>
     <string name="fritz_vision_img_seg_description">Take a picture and identify people in the photo (highlighted in blue).</string>
 
+    <string name="fritz_pose_detection_title">Pose Detection</string>
+    <string name="fritz_pose_detection_description">Detect poses.</string>
+
+    <string name="fritz_vision_people_segmentation_title">People Segmentation</string>
+    <string name="fritz_vision_people_segmentation_description">Create a mask on people in an image.</string>
+
+    <string name="fritz_vision_living_room_segmentation_title">Living Room Segmentation</string>
+    <string name="fritz_vision_living_room_segmentation_description">Create a mask on living room objects.</string>
+
+    <string name="fritz_vision_outdoor_segmentation_title">Outdoor Segmentation</string>
+    <string name="fritz_vision_outdoor_segmentation_description">Create a mask on outdoor objects in an image.</string>
+
     <string name="mnist_title">MNIST</string>
     <string name="mnist_description">Classic MNIST handwriting recognizer for digits 0&#8211;9</string>
     <string name="picture">Picture</string>

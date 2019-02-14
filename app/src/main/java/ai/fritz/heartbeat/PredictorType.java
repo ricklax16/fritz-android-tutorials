@@ -1,0 +1,11 @@
+package ai.fritz.heartbeat;
+
+public enum PredictorType {
+    POSE_DETECTION,
+    STYLE_TRANSFER,
+    IMAGE_LABELING,
+    OBJECT_DETECTION,
+    PEOPLE_SEGMENTATION,
+    LIVING_ROOM_SEGMENTATION,
+    OUTDOOR_SEGMENTATION,
+}

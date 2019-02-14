@@ -103,12 +103,39 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
         demoItems.add(new DemoItem(
-                getString(R.string.fritz_vision_img_seg_title),
-                getString(R.string.fritz_vision_img_seg_description),
+                getString(R.string.fritz_vision_people_segmentation_title),
+                getString(R.string.fritz_vision_people_segmentation_description),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Navigation.goToImageSegmentation(v.getContext());
+                        Navigation.goToImageSegmentation(v.getContext(), PredictorType.PEOPLE_SEGMENTATION);
+                    }
+                }));
+        demoItems.add(new DemoItem(
+                getString(R.string.fritz_vision_living_room_segmentation_title),
+                getString(R.string.fritz_vision_living_room_segmentation_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.goToImageSegmentation(v.getContext(), PredictorType.LIVING_ROOM_SEGMENTATION);
+                    }
+                }));
+        demoItems.add(new DemoItem(
+                getString(R.string.fritz_vision_outdoor_segmentation_title),
+                getString(R.string.fritz_vision_outdoor_segmentation_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.goToImageSegmentation(v.getContext(), PredictorType.OUTDOOR_SEGMENTATION);
+                    }
+                }));
+        demoItems.add(new DemoItem(
+                getString(R.string.fritz_pose_detection_title),
+                getString(R.string.fritz_pose_detection_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.startPoseDetection(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(

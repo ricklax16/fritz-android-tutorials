@@ -1,5 +1,6 @@
 package ai.fritz.heartbeat;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -7,6 +8,7 @@ import android.graphics.Paint;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
 import android.view.View;
 import android.widget.Button;
@@ -15,20 +17,24 @@ import android.widget.RelativeLayout;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.core.utils.BitmapUtils;
 import ai.fritz.heartbeat.ui.OverlayView;
-import ai.fritz.peoplesegmentation.PeopleSegmentOnDeviceModel;
+import ai.fritz.heartbeat.utils.Navigation;
+import ai.fritz.core.utils.BitmapUtils;
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
 import ai.fritz.vision.FritzVisionOrientation;
-import ai.fritz.vision.models.SegmentOnDeviceModel;
-import ai.fritz.vision.outputs.FritzVisionSegmentResult;
-import ai.fritz.vision.predictors.FritzVisionSegmentPredictor;
+import ai.fritz.vision.PredictorStatusListener;
+import ai.fritz.vision.imagesegmentation.FritzVisionSegmentResult;
+import ai.fritz.vision.imagesegmentation.FritzVisionSegmentPredictor;
+import ai.fritz.vision.imagesegmentation.LivingRoomSegmentManagedModel;
+import ai.fritz.vision.imagesegmentation.OutdoorSegmentManagedModel;
+import ai.fritz.vision.imagesegmentation.PeopleSegmentManagedModel;
+import ai.fritz.vision.imagesegmentation.SegmentManagedModel;
 import butterknife.ButterKnife;
 
 
 public class ImageSegmentationActivity extends BaseCameraActivity implements ImageReader.OnImageAvailableListener {
-    private static final String TAG = LiveVideoActivity.class.getSimpleName();
+    private static final String TAG = ImageSegmentationActivity.class.getSimpleName();
 
     /**
      * Requests for the size of the preview depending on the camera results. We will try to match the closest
@@ -44,6 +50,8 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     private FritzVisionSegmentResult segmentResult;
     private FritzVisionImage visionImage;
 
+    private PredictorType predictorType;
+
     Button snapshotButton;
     RelativeLayout previewLayout;
     RelativeLayout snapshotLayout;
@@ -57,6 +65,10 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setTitle(R.string.fritz_vision_img_seg_title);
+
+        Intent callingIntent = getIntent();
+        predictorType = PredictorType.valueOf(callingIntent.getStringExtra(Navigation.PREDICTOR_TYPE_KEY));
+        Log.d(TAG, predictorType.name());
     }
 
     @Override
@@ -72,14 +84,25 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     @Override
     public void onPreviewSizeChosen(final Size size, final Size cameraSize, final int rotation) {
         imgRotation = FritzVisionOrientation.getImageRotationFromCamera(this, cameraId);
-        SegmentOnDeviceModel onDeviceModel = new PeopleSegmentOnDeviceModel();
-        predictor = FritzVision.ImageSegmentation.getPredictor(onDeviceModel);
+
         snapshotButton = findViewById(R.id.take_picture_btn);
+        snapshotButton.setVisibility(View.GONE);
         previewLayout = findViewById(R.id.preview_frame);
         snapshotLayout = findViewById(R.id.snapshot_frame);
         snapshotOverlay = findViewById(R.id.snapshot_view);
         closeButton = findViewById(R.id.close_btn);
         spinner = findViewById(R.id.spinner);
+        SegmentManagedModel managedModel = getManagedModelType();
+        FritzVision.ImageSegmentation.loadPredictor(managedModel, new PredictorStatusListener<FritzVisionSegmentPredictor>() {
+            @Override
+            public void onPredictorReady(FritzVisionSegmentPredictor segmentPredictor) {
+                Log.d(TAG, "Segmentation predictor is ready");
+                predictor = segmentPredictor;
+                // Uncomment to test out the crop and scale option.
+                // predictor.setOptions(new FritzVisionSegmentPredictorOptions.Builder().cropAndScaleOption(FritzVisionCropAndScale.CENTER_CROP).build());
+                snapshotButton.setVisibility(View.VISIBLE);
+            }
+        });
 
         if (snapshotOverlay != null) {
             snapshotOverlay.addCallback(new OverlayView.DrawCallback() {
@@ -98,7 +121,7 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
                     @Override
                     public void drawCallback(final Canvas canvas) {
                         if (visionImage != null) {
-                            Bitmap scaledBitmap = BitmapUtils.scale(visionImage.getBitmap(), cameraSize.getWidth(), cameraSize.getHeight());
+                            Bitmap scaledBitmap = BitmapUtils.scale(visionImage.rotateBitmap(), cameraSize.getWidth(), cameraSize.getHeight());
                             canvas.drawBitmap(scaledBitmap, new Matrix(), new Paint());
                         }
                     }
@@ -107,6 +130,10 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
         snapshotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (predictor == null) {
+                    Log.d(TAG, "Predictor is not ready");
+                    return;
+                }
                 if (!computing.compareAndSet(false, true)) {
                     return;
                 }
@@ -165,6 +192,18 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
     private void showPreviewLayout() {
         previewLayout.setVisibility(View.VISIBLE);
         snapshotLayout.setVisibility(View.GONE);
+    }
+
+    private SegmentManagedModel getManagedModelType() {
+        if(predictorType == PredictorType.LIVING_ROOM_SEGMENTATION) {
+            return new LivingRoomSegmentManagedModel();
+        }
+
+        if(predictorType == PredictorType.OUTDOOR_SEGMENTATION) {
+            return new OutdoorSegmentManagedModel();
+        }
+
+        return new PeopleSegmentManagedModel();
     }
 
     @Override
