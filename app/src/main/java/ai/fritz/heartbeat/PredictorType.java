@@ -1,7 +1,7 @@
 package ai.fritz.heartbeat;
 
 public enum PredictorType {
-    POSE_DETECTION,
+    POSE_ESTIMATION,
     STYLE_TRANSFER,
     IMAGE_LABELING,
     OBJECT_DETECTION,

@@ -38,9 +38,9 @@ public class Navigation {
         context.startActivity(imgSegActivity);
     }
 
-    public static void startPoseDetection(Context context) {
+    public static void startPoseEstimation(Context context) {
         Intent fullCameraActivity = new Intent(context, FullCameraActivity.class);
-        fullCameraActivity.putExtra(PREDICTOR_TYPE_KEY, PredictorType.POSE_DETECTION.name());
+        fullCameraActivity.putExtra(PREDICTOR_TYPE_KEY, PredictorType.POSE_ESTIMATION.name());
         context.startActivity(fullCameraActivity);
     }
 }

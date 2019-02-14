@@ -113,7 +113,7 @@ public class FullCameraActivity extends BaseCameraActivity implements ImageReade
     }
 
     private void createPredictor() {
-        if (predictorType == PredictorType.POSE_DETECTION) {
+        if (predictorType == PredictorType.POSE_ESTIMATION) {
             FritzOnDeviceModel onDeviceModel = new PoseEstimationOnDeviceModel();
             posePredictor = FritzVision.PoseEstimation.getPredictor(onDeviceModel);
         }
@@ -125,7 +125,7 @@ public class FullCameraActivity extends BaseCameraActivity implements ImageReade
     }
 
     private void handleDrawingResult(Canvas canvas, Size cameraSize) {
-        if (predictorType == PredictorType.POSE_DETECTION && poseResult != null) {
+        if (predictorType == PredictorType.POSE_ESTIMATION && poseResult != null) {
             poseResult.drawPoses(canvas, cameraSize);
         }
 
@@ -135,7 +135,7 @@ public class FullCameraActivity extends BaseCameraActivity implements ImageReade
     }
 
     private void runInference(FritzVisionImage fritzVisionImage) {
-        if (predictorType == PredictorType.POSE_DETECTION) {
+        if (predictorType == PredictorType.POSE_ESTIMATION) {
             poseResult = posePredictor.predict(fritzVisionImage);
         }
 

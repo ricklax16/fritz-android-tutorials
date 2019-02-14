@@ -130,12 +130,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
         demoItems.add(new DemoItem(
-                getString(R.string.fritz_pose_detection_title),
-                getString(R.string.fritz_pose_detection_description),
+                getString(R.string.fritz_pose_estimation_title),
+                getString(R.string.fritz_pose_estimation_description),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Navigation.startPoseDetection(v.getContext());
+                        Navigation.startPoseEstimation(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(
