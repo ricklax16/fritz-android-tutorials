@@ -44,13 +44,12 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
     implementation "ai.fritz:core:${sdk_version}"
-    implementation "ai.fritz:custom-model-tfmobile:${sdk_version}"
-    implementation "ai.fritz:custom-model-tflite:${sdk_version}"
+    implementation "ai.fritz:vision:${sdk_version}"
+
     implementation "ai.fritz:vision-image-label-model:${sdk_version}"
     implementation "ai.fritz:vision-object-detection-model:${sdk_version}"
     implementation "ai.fritz:vision-style-painting-models:${sdk_version}"
-    implementation "ai.fritz:vision-people-segmentation-model:${sdk_version}"
-
+    implementation "ai.fritz:vision-pose-estimation-model:${sdk_version}"
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')

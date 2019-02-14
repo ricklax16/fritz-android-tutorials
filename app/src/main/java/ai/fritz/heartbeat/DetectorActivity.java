@@ -16,9 +16,9 @@ import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
 import ai.fritz.vision.FritzVisionOrientation;
-import ai.fritz.vision.options.FritzVisionObjectPredictorOptions;
-import ai.fritz.vision.outputs.FritzVisionObjectResult;
-import ai.fritz.vision.predictors.FritzVisionObjectPredictor;
+import ai.fritz.vision.objectdetection.FritzVisionObjectPredictor;
+import ai.fritz.vision.objectdetection.FritzVisionObjectPredictorOptions;
+import ai.fritz.vision.objectdetection.FritzVisionObjectResult;
 
 /**
  * Detects different objects in the image.

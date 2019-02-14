@@ -48,6 +48,10 @@
             android:name="ai.fritz.heartbeat.ImageSegmentationActivity"
             android:screenOrientation="portrait"
             android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
+        <activity
+            android:name="ai.fritz.heartbeat.FullCameraActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
 
         <meta-data
             android:name="fritz_api_key"
