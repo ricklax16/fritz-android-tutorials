@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
     implementation "ai.fritz:core:${sdk_version}"
+
+    implementation "ai.fritz:custom-model-tflite:${sdk_version}"
     implementation "ai.fritz:vision:${sdk_version}"
 
     implementation "ai.fritz:vision-image-label-model:${sdk_version}"

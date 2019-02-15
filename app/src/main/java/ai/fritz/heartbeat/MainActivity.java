@@ -139,6 +139,24 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
         demoItems.add(new DemoItem(
+                getString(R.string.fritz_customtfmobile_title),
+                getString(R.string.fritz_customtfmobile_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.goToTFMobile(v.getContext());
+                    }
+                }));
+        demoItems.add(new DemoItem(
+                getString(R.string.fritz_customtflite_title),
+                getString(R.string.fritz_customtflite_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.goToTFLite(v.getContext());
+                    }
+                }));
+        demoItems.add(new DemoItem(
                 getString(R.string.fritz_info_title),
                 getString(R.string.fritz_info_description),
                 new View.OnClickListener() {

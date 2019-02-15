@@ -3,6 +3,8 @@ package ai.fritz.heartbeat.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import ai.fritz.heartbeat.CustomTFLiteActivity;
+import ai.fritz.heartbeat.CustomTFMobileActivity;
 import ai.fritz.heartbeat.DetectorActivity;
 import ai.fritz.heartbeat.FullCameraActivity;
 import ai.fritz.heartbeat.ImageSegmentationActivity;
@@ -16,6 +18,16 @@ import ai.fritz.heartbeat.StyleActivity;
 public class Navigation {
 
     public static final String PREDICTOR_TYPE_KEY = "PredictorType";
+
+    public static void goToTFMobile(Context context) {
+        Intent tfMobile = new Intent(context, CustomTFMobileActivity.class);
+        context.startActivity(tfMobile);
+    }
+
+    public static void goToTFLite(Context context) {
+        Intent tflite = new Intent(context, CustomTFLiteActivity.class);
+        context.startActivity(tflite);
+    }
 
     public static void goToLiveVideoFritzLabel(Context context) {
         Intent liveVideoActivity = new Intent(context, LiveVideoActivity.class);
