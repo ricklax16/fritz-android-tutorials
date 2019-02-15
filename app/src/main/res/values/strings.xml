@@ -11,10 +11,10 @@
     <string name="fritz_vision_description_live_video">Label video frames</string>
 
     <string name="fritz_customtfmobile_title">Custom TFMobile Model</string>
-    <string name="fritz_customtfmobile_description">Uses a TFMobile model to label images.</string>
+    <string name="fritz_customtfmobile_description">Demonstrates using a TFMobile model to label images. Note, this is not a prebuilt model provided by the Vision API.</string>
     
     <string name="fritz_customtflite_title">Custom TFLite Model</string>
-    <string name="fritz_customtflite_description">Uses a TFLite model to identify handwritten numbers.</string>
+    <string name="fritz_customtflite_description">Demonstrates using a custom TFLite model to identify handwritten numbers. Note, this is not a prebuilt model provided by the Vision API.</string>
 
     <string name="fritz_handwriting_detection">Handwriting Detection</string>
     <string name="fritz_handwriting_detection_description">Detects numbers from 0-9. Draw a number on the canvas and guess what it is.</string>
