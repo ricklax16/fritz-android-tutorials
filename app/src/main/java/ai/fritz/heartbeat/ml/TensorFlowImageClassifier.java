@@ -124,6 +124,10 @@ public class TensorFlowImageClassifier implements Classifier {
         c.intValues = new int[inputSize * inputSize];
         c.floatValues = new float[inputSize * inputSize * 3];
 
+        /**
+         * This model is used to demonstrate custom models with TensorFlow Mobile
+         * and should not be used in production.
+         */
         FritzManagedModel managedModel = new FritzManagedModel(context.getString(R.string.inception_v3_model_id));
         final FritzModelManager modelManager = new FritzModelManager(managedModel);
         modelManager.loadModel(new ModelReadyListener() {

@@ -43,6 +43,11 @@ public class MnistClassifier {
     private static final int BYTE_SIZE_OF_FLOAT = 4;
 
     public MnistClassifier(Activity activity) {
+
+        /**
+         * This MNIST model provided is used to demonstrate custom models with TensorFlow Lite
+         * and should not be used in production.
+         */
         FritzManagedModel managedModel = new FritzManagedModel(activity.getString(R.string.tflite_model_id));
         FritzModelManager modelManager = new FritzModelManager(managedModel);
         modelManager.loadModel(new ModelReadyListener() {
