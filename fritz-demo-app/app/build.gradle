@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'io.fabric'
-//apply plugin: 'com.google.gms.google-services'
+
 
 android {
     configurations.all {
@@ -38,10 +37,6 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'org.tensorflow:tensorflow-lite:+'
     implementation 'org.tensorflow:tensorflow-android:+'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-
-    // Add dependency
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
     implementation "ai.fritz:core:${sdk_version}"
 

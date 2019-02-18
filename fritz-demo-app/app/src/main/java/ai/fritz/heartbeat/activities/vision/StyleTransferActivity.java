@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities.vision;
 
 import android.graphics.Canvas;
 import android.media.Image;
@@ -13,6 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import ai.fritz.core.FritzOnDeviceModel;
 import ai.fritz.fritzvisionstylepaintings.PaintingStyles;
+import ai.fritz.heartbeat.activities.BaseCameraActivity;
+import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
@@ -23,23 +25,23 @@ import ai.fritz.vision.styletransfer.FritzVisionStylePredictorOptions;
 import ai.fritz.vision.styletransfer.FritzVisionStyleResult;
 
 
-public class StyleActivity extends BaseCameraActivity implements OnImageAvailableListener {
-    private static final String TAG = StyleActivity.class.getSimpleName();
+public class StyleTransferActivity extends BaseCameraActivity implements OnImageAvailableListener {
+    private static final String TAG = StyleTransferActivity.class.getSimpleName();
 
     // Should this activity show the custom style transfer model (cycles through included models if false)
-    private static final Size DESIRED_PREVIEW_SIZE = new Size(1280, 960);
+    private static final Size DESIRED_PREVIEW_SIZE = new Size(400, 600);
     private static final String[] STYLE_NAMES = {
-            "BICENTENNIAL_PRINT_MANAGED_MODEL",
-            "FEMMES_MANAGED_MODEL",
-            "HEAD_OF_CLOWN_MANAGED_MODEL",
-            "HORSES_ON_SEASHORE_MANAGED_MODEL",
-            "KALEIDOSCOPE_MANAGED_MODEL",
-            "PINK_BLUE_RHOMBUS_MANAGED_MODEL",
-            "POPPY_FIELD_MANAGED_MODEL",
-            "RITMO_PLASTICO_MANAGED_MODEL",
-            "STARRY_NIGHT_MANAGED_MODEL",
-            "THE_SCREAM_MANAGED_MODEL",
-            "THE_TRAIL_MANAGED_MODEL"
+            "BICENTENNIAL_PRINT",
+            "FEMMES",
+            "HEAD_OF_CLOWN",
+            "HORSES_ON_SEASHORE",
+            "KALEIDOSCOPE",
+            "PINK_BLUE_RHOMBUS",
+            "POPPY_FIELD",
+            "RITMO_PLASTICO",
+            "STARRY_NIGHT",
+            "THE_SCREAM",
+            "THE_TRAIL"
     };
 
     private AtomicBoolean computing = new AtomicBoolean(false);

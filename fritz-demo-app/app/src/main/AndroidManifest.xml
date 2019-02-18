@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="ai.fritz.heartbeat.SplashActivity"
+            android:name="ai.fritz.heartbeat.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -30,34 +30,34 @@
 
         </activity>
         <activity
-            android:name="ai.fritz.heartbeat.MainActivity"
+            android:name="ai.fritz.heartbeat.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ai.fritz.heartbeat.StyleActivity"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity"
+            android:name="ai.fritz.heartbeat.activities.vision.StyleTransferActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ai.fritz.heartbeat.LiveVideoActivity"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity"
+            android:name="ai.fritz.heartbeat.activities.vision.ImageLabelingActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ai.fritz.heartbeat.DetectorActivity"
+            android:name="ai.fritz.heartbeat.activities.vision.ObjectDetectionActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
         <activity
-            android:name="ai.fritz.heartbeat.ImageSegmentationActivity"
+            android:name="ai.fritz.heartbeat.activities.vision.ImageSegmentationActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
         <activity
-            android:name="ai.fritz.heartbeat.FullCameraActivity"
+            android:name="ai.fritz.heartbeat.activities.vision.PoseEstimationActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
         <activity
-            android:name="ai.fritz.heartbeat.CustomTFMobileActivity"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
+            android:name="ai.fritz.heartbeat.activities.custommodel.CustomTFMobileActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
         <activity
-            android:name="ai.fritz.heartbeat.CustomTFLiteActivity"
-            android:parentActivityName="ai.fritz.heartbeat.MainActivity" />
+            android:name="ai.fritz.heartbeat.activities.custommodel.CustomTFLiteActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
 
         <meta-data
             android:name="fritz_api_key"

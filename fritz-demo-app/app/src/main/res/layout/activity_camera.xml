@@ -25,5 +25,5 @@
         android:id="@+id/camera_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ai.fritz.heartbeat.BaseCameraActivity" />
+        tools:context="ai.fritz.heartbeat.activities.BaseCameraActivity" />
 </android.support.constraint.ConstraintLayout>

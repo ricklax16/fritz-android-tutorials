@@ -2,7 +2,7 @@ package ai.fritz.heartbeat.ui;
 
 import java.util.List;
 
-import ai.fritz.heartbeat.ml.Classifier.Recognition;
+import ai.fritz.heartbeat.activities.custommodel.ml.Classifier.Recognition;
 import ai.fritz.vision.FritzVisionLabel;
 
 public interface ResultsView {

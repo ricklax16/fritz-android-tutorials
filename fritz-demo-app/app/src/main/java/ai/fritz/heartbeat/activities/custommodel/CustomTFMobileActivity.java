@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities.custommodel;
 
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -12,8 +12,10 @@ import android.util.Size;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import ai.fritz.heartbeat.ml.Classifier;
-import ai.fritz.heartbeat.ml.TensorFlowImageClassifier;
+import ai.fritz.heartbeat.activities.BaseCameraActivity;
+import ai.fritz.heartbeat.R;
+import ai.fritz.heartbeat.activities.custommodel.ml.Classifier;
+import ai.fritz.heartbeat.activities.custommodel.ml.TensorFlowImageClassifier;
 import ai.fritz.heartbeat.ui.ResultsView;
 import ai.fritz.core.utils.BitmapUtils;
 import ai.fritz.vision.FritzVisionImage;

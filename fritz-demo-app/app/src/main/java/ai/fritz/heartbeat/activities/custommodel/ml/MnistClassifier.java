@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat.ml;
+package ai.fritz.heartbeat.activities.custommodel.ml;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

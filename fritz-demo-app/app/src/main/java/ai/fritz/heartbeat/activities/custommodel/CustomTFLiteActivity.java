@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities.custommodel;
 
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -9,7 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import ai.fritz.heartbeat.ml.MnistClassifier;
+import ai.fritz.heartbeat.R;
+import ai.fritz.heartbeat.activities.custommodel.ml.MnistClassifier;
 import ai.fritz.heartbeat.ui.DrawModel;
 import ai.fritz.heartbeat.ui.DrawView;
 import butterknife.BindView;

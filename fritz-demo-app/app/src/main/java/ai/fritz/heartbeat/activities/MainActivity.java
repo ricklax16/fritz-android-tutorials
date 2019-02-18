@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,20 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import ai.fritz.core.Fritz;
+import ai.fritz.heartbeat.PredictorType;
+import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.adapters.DemoAdapter;
 import ai.fritz.heartbeat.adapters.DemoItem;
 import ai.fritz.heartbeat.ui.SeparatorDecoration;
-import ai.fritz.heartbeat.utils.Navigation;
+import ai.fritz.heartbeat.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * The primary activity that shows the different model demos.
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         setTitle(R.string.demo_title);
         ButterKnife.bind(this);

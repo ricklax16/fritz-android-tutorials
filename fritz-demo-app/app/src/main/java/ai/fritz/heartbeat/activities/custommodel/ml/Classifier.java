@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat.ml;
+package ai.fritz.heartbeat.activities.custommodel.ml;
 
 /* Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 

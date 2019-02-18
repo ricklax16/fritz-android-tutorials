@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities.vision;
 
 import android.media.Image;
 import android.media.ImageReader;
@@ -11,6 +11,8 @@ import android.util.Size;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import ai.fritz.core.FritzOnDeviceModel;
+import ai.fritz.heartbeat.activities.BaseCameraActivity;
+import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.ui.ResultsView;
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
@@ -21,8 +23,8 @@ import ai.fritz.visionlabel.ImageLabelOnDeviceModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LiveVideoActivity extends BaseCameraActivity implements ImageReader.OnImageAvailableListener {
-    private static final String TAG = LiveVideoActivity.class.getSimpleName();
+public class ImageLabelingActivity extends BaseCameraActivity implements ImageReader.OnImageAvailableListener {
+    private static final String TAG = ImageLabelingActivity.class.getSimpleName();
 
     /**
      * Requests for the size of the preview depending on the camera results. We will try to match the closest

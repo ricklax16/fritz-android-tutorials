@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.fragments.CameraConnectionFragment;
 import ai.fritz.heartbeat.ui.OverlayView;
 

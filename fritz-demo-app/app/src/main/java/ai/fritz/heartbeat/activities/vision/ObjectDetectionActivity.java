@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities.vision;
 
 import android.graphics.Canvas;
 import android.media.Image;
@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import ai.fritz.core.FritzOnDeviceModel;
 import ai.fritz.fritzvisionobjectmodel.ObjectDetectionOnDeviceModel;
+import ai.fritz.heartbeat.activities.BaseCameraActivity;
+import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.ui.OverlayView;
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
@@ -23,11 +25,11 @@ import ai.fritz.vision.objectdetection.FritzVisionObjectResult;
 /**
  * Detects different objects in the image.
  */
-public class DetectorActivity extends BaseCameraActivity implements OnImageAvailableListener {
+public class ObjectDetectionActivity extends BaseCameraActivity implements OnImageAvailableListener {
 
-    private static final String TAG = DetectorActivity.class.getSimpleName();
+    private static final String TAG = ObjectDetectionActivity.class.getSimpleName();
 
-    private static final Size DESIRED_PREVIEW_SIZE = new Size(960, 1280);
+    private static final Size DESIRED_PREVIEW_SIZE = new Size(400, 600);
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 

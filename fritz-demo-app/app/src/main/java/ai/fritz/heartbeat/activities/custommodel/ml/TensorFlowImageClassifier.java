@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package ai.fritz.heartbeat.ml;
+package ai.fritz.heartbeat.activities.custommodel.ml;
 
 import android.content.Context;
 import android.content.res.AssetManager;

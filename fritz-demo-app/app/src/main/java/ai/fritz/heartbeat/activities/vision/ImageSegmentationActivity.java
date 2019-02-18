@@ -1,4 +1,4 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities.vision;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,8 +17,11 @@ import android.widget.RelativeLayout;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import ai.fritz.heartbeat.activities.BaseCameraActivity;
+import ai.fritz.heartbeat.PredictorType;
+import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.ui.OverlayView;
-import ai.fritz.heartbeat.utils.Navigation;
+import ai.fritz.heartbeat.Navigation;
 import ai.fritz.core.utils.BitmapUtils;
 import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
@@ -40,7 +43,7 @@ public class ImageSegmentationActivity extends BaseCameraActivity implements Ima
      * Requests for the size of the preview depending on the camera results. We will try to match the closest
      * in terms of size and aspect ratio.
      */
-    private static final Size DESIRED_PREVIEW_SIZE = new Size(960, 1280);
+    private static final Size DESIRED_PREVIEW_SIZE = new Size(400, 600);
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 

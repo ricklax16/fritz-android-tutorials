@@ -10,7 +10,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import ai.fritz.heartbeat.ml.Classifier.Recognition;
+import ai.fritz.heartbeat.activities.custommodel.ml.Classifier.Recognition;
 import ai.fritz.vision.FritzVisionLabel;
 
 public class RecognitionScoreView extends View implements ResultsView {

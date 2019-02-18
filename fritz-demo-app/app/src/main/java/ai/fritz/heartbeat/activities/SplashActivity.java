@@ -1,8 +1,10 @@
-package ai.fritz.heartbeat;
+package ai.fritz.heartbeat.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import ai.fritz.heartbeat.activities.MainActivity;
 
 /**
  * The splash activity is the entry point for the rest of the app.
