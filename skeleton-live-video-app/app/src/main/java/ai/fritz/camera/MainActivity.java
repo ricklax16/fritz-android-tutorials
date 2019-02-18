@@ -1,29 +1,16 @@
 package ai.fritz.camera;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.media.Image;
 import android.media.ImageReader;
-import android.os.SystemClock;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Size;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import ai.fritz.core.Fritz;
-import ai.fritz.fritzvisionstylemodel.ArtisticStyle;
-import ai.fritz.fritzvisionstylemodel.FritzStyleResolution;
-import ai.fritz.fritzvisionstylemodel.FritzVisionStylePredictor;
-import ai.fritz.fritzvisionstylemodel.FritzVisionStylePredictorOptions;
-import ai.fritz.fritzvisionstylemodel.FritzVisionStyleTransfer;
-import ai.fritz.vision.inputs.FritzVisionImage;
-import ai.fritz.vision.inputs.FritzVisionOrientation;
-import ai.fritz.vision.predictors.FritzVisionPredictor;
+import ai.fritz.vision.styletransfer.FritzVisionStylePredictor;
+import ai.fritz.vision.styletransfer.FritzVisionStyleResult;
 
 public class MainActivity extends BaseCameraActivity implements ImageReader.OnImageAvailableListener {
 
@@ -33,11 +20,11 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
 
     private AtomicBoolean computing = new AtomicBoolean(false);
 
-    private FritzVisionImage styledImage;
+    private FritzVisionStyleResult styleResult;
 
     // STEP 1:
     // TODO: Define the predictor variable
-    // private FritzVisionStylePredictor predictor;
+     private FritzVisionStylePredictor predictor;
     // END STEP 1
 
     private Size cameraViewSize;
@@ -51,8 +38,12 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
 
         // STEP 1: Get the predictor and set the options.
         // ----------------------------------------------
-        // TODO: Add the predictor snippet here
-        // predictor = FritzVisionStyleTransfer.getPredictor(this, ArtisticStyle.STARRY_NIGHT);
+        // A FritzOnDeviceModel object is available when a model has been
+        // successfully downloaded and included with the app.
+        // TODO: uncomment the following lines to use a style transfer model to pass into the style predictor. You must include ``implementation "ai.fritz:vision-style-painting-models:${sdk_version}"`` in your app/build.gradle file
+
+        // FritzOnDeviceModel[] styles = PaintingStyles.getAll();
+        // predictor = FritzVision.StyleTransfer.getPredictor(styles[0]);
         // ----------------------------------------------
         // END STEP 1
     }
@@ -79,9 +70,9 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
                     public void drawCallback(final Canvas canvas) {
                         // STEP 4: Draw the prediction result
                         // ----------------------------------
-                        if (styledImage != null) {
+                        if (styleResult != null) {
                             // TODO: Draw or show the result here
-                            // styledImage.drawOnCanvas(canvas);
+                            // styleResult.drawToCanvas(canvas, cameraViewSize);
                         }
                         // ----------------------------------
                         // END STEP 4
@@ -120,10 +111,7 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
                         // STEP 3: Run predict on the image
                         // ---------------------------------------------------
                         // TODO: Add code for running prediction on the image
-                        // final long startTime = SystemClock.uptimeMillis();
-                        // styledImage = predictor.predict(fritzImage);
-                        // styledImage.scale(cameraViewSize.getWidth(), cameraViewSize.getHeight());
-                        // Log.d(TAG, "INFERENCE TIME:" + (SystemClock.uptimeMillis() - startTime));
+                        // styleResult = predictor.predict(fritzImage);
                         // ----------------------------------------------------
                         // END STEP 3
 
