@@ -8,11 +8,11 @@ Fritz is the machine learning platform for iOS and Android developers. Teach you
 There are 2 sample apps to help get you get started with the SDK:
 
 - Fritz demo app - Our kitchen sink project showcases the on-device Vision API and Custom Model usage
-- Live Video Skeleton app - Use our lightweight camera app to quickly get started with ML features.
+- Live Video Skeleton app - Use our lightweight camera app to quickly get started with ML features
 
-Choose an app and run it in Android Studios.
+Choose an app and run it in Android Studio.
 
-To download our app on the play store:
+Download our Demo App:
 Heartbeat By Fritz is also available on the [Google Play Store](https://play.google.com/store/apps/details?id=ai.fritz.heartbeat)
 
 ## SDK version
@@ -21,7 +21,7 @@ Heartbeat By Fritz is also available on the [Google Play Store](https://play.goo
 
 ## For questions on how to use the demos, contact us:
 
-- [Heartbeat Community on Slack](https://heartbeat-by-fritz.slack.com/join/shared_invite/enQtMzY5OTM1MzgyODIzLTZhNTFjYmRiODU0NjZjNjJlOGRjYzI2OTIwY2M4YTBiNjM1ODU1ZmU3Y2Q2MmMzMmI2ZTIzZjQ1ZWI3NzBkZGU)
+- [Slack](https://heartbeat-by-fritz.slack.com/join/shared_invite/enQtMzY5OTM1MzgyODIzLTZhNTFjYmRiODU0NjZjNjJlOGRjYzI2OTIwY2M4YTBiNjM1ODU1ZmU3Y2Q2MmMzMmI2ZTIzZjQ1ZWI3NzBkZGU)
 - [Help Center](https://docs.fritz.ai/help-center/index.html)
 
 ## Setup a Fritz account
