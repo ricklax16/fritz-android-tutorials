@@ -18,13 +18,15 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import ai.fritz.core.Fritz;
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictor;
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectPredictorOptions;
-import ai.fritz.fritzvisionobjectmodel.FritzVisionObjectResult;
-import ai.fritz.vision.FritzVisionLabel;
+import ai.fritz.fritzvisionobjectmodel.ObjectDetectionOnDeviceModel;
+import ai.fritz.vision.FritzVision;
+import ai.fritz.vision.FritzVisionCropAndScale;
+import ai.fritz.vision.FritzVisionImage;
 import ai.fritz.vision.FritzVisionObject;
-import ai.fritz.vision.inputs.FritzVisionImage;
-import ai.fritz.vision.inputs.FritzVisionOrientation;
+import ai.fritz.vision.FritzVisionOrientation;
+import ai.fritz.vision.objectdetection.FritzVisionObjectPredictor;
+import ai.fritz.vision.objectdetection.FritzVisionObjectPredictorOptions;
+import ai.fritz.vision.objectdetection.FritzVisionObjectResult;
 
 public class MainActivity extends BaseCameraActivity implements ImageReader.OnImageAvailableListener {
 
@@ -56,8 +58,10 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
         // TODO: Add the predictor snippet here
         FritzVisionObjectPredictorOptions options = new FritzVisionObjectPredictorOptions.Builder()
                 .confidenceThreshold(.4f)
+                .cropAndScaleOption(FritzVisionCropAndScale.SCALE_TO_FIT)
                 .build();
-        predictor = new FritzVisionObjectPredictor(options);
+        ObjectDetectionOnDeviceModel onDeviceModel = new ObjectDetectionOnDeviceModel();
+        predictor = FritzVision.ObjectDetection.getPredictor(onDeviceModel, options);
         // ----------------------------------------------
         // END STEP 1
 
@@ -75,8 +79,6 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
 
     @Override
     public void onPreviewSizeChosen(final Size previewSize, final Size cameraViewSize, final int rotation) {
-        Drawable drawable = getResources().getDrawable(R.drawable.ic_warning);
-
         final List<String> filteredObjects = new ArrayList<>();
         filteredObjects.add("cat");
         filteredObjects.add("dog");
@@ -95,14 +97,17 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
                         boolean hasCat = false;
                         boolean hasDog = false;
 
+                        Size rotatedSize = visionImage.getRotatedBitmapDimensions();
+
                         // Go through all results
                         for (FritzVisionObject object : result.getVisionObjects()) {
                             String labelText = object.getVisionLabel().getText();
 
                             // Only show results for dogs and cats
                             if (filteredObjects.contains(labelText)) {
-                                float scaleFactorWidth = ((float) cameraViewSize.getWidth()) / visionImage.getBitmap().getWidth();
-                                float scaleFactorHeight = ((float) cameraViewSize.getHeight()) / visionImage.getBitmap().getHeight();
+                                float scaleFactorWidth = ((float) cameraViewSize.getWidth()) / rotatedSize.getWidth();
+                                float scaleFactorHeight = ((float) cameraViewSize.getHeight()) / rotatedSize.getHeight();
+
                                 object.drawOnCanvas(getApplicationContext(), canvas, scaleFactorWidth, scaleFactorHeight);
 
                                 if (labelText.equalsIgnoreCase("cat")) {
