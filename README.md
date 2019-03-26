@@ -15,6 +15,12 @@ Choose an app and run it in Android Studio.
 Download our Demo App:
 Heartbeat By Fritz is also available on the [Google Play Store](https://play.google.com/store/apps/details?id=ai.fritz.heartbeat)
 
+## Official Tutorials
+For the full app code, go in tutorials and then select the appropriate app:
+
+- [Building a Pet Monitor with Object Detection](https://medium.freecodecamp.org/a-guide-to-object-detection-with-fritz-build-a-pet-monitoring-app-in-android-with-machine-learning-a8ed500978e5)
+- [Style Transfer for Android - Transform your photos and videos into masterpieces](https://heartbeat.fritz.ai/real-time-style-transfer-for-android-6a9d238dfdb5)
+
 ## SDK version
 
 - Uses the Android SDK 3.0.2.
