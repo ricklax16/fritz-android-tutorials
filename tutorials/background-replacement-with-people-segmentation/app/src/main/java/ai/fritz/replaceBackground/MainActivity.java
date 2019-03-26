@@ -31,6 +31,7 @@ import ai.fritz.vision.FritzVision;
 import ai.fritz.vision.FritzVisionImage;
 import ai.fritz.vision.FritzVisionOrientation;
 import ai.fritz.vision.imagesegmentation.FritzVisionSegmentPredictor;
+import ai.fritz.vision.imagesegmentation.FritzVisionSegmentPredictorOptions;
 import ai.fritz.vision.imagesegmentation.FritzVisionSegmentResult;
 import ai.fritz.vision.imagesegmentation.MaskType;
 
@@ -122,7 +123,10 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
         selectBackgroundBtn = findViewById(R.id.selectBackgroundBtn);
 
         PeopleSegmentOnDeviceModel onDeviceModel = new PeopleSegmentOnDeviceModel();
-        predictor = FritzVision.ImageSegmentation.getPredictor(onDeviceModel);
+        FritzVisionSegmentPredictorOptions options = new FritzVisionSegmentPredictorOptions.Builder()
+                .targetConfidenceThreshold(.6f)
+                .build();
+        predictor = FritzVision.ImageSegmentation.getPredictor(onDeviceModel, options);
 
         snapshotOverlay.setCallback(new OverlayView.DrawCallback() {
             @Override
