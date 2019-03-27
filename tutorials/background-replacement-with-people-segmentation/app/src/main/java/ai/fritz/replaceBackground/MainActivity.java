@@ -40,7 +40,7 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int SELECT_IMAGE = 1;
 
-    private AtomicBoolean computing = new AtomicBoolean(false);
+    private AtomicBoolean shouldSample = new AtomicBoolean(true);
     private FritzVisionSegmentPredictor predictor;
     private int imgRotation;
 
@@ -60,7 +60,13 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fritz.configure(getApplicationContext(), "bbe75c73f8b24e63bc05bf81ed9d2829");
+        Fritz.configure(getApplicationContext(), "<Your API key>");
+
+        PeopleSegmentOnDeviceModel onDeviceModel = new PeopleSegmentOnDeviceModel();
+        FritzVisionSegmentPredictorOptions options = new FritzVisionSegmentPredictorOptions.Builder()
+                .targetConfidenceThreshold(.4f)
+                .build();
+        predictor = FritzVision.ImageSegmentation.getPredictor(onDeviceModel, options);
     }
 
     @Override
@@ -122,12 +128,6 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
         snapshotProcessingSpinner = findViewById(R.id.snapshotProcessingSpinner);
         selectBackgroundBtn = findViewById(R.id.selectBackgroundBtn);
 
-        PeopleSegmentOnDeviceModel onDeviceModel = new PeopleSegmentOnDeviceModel();
-        FritzVisionSegmentPredictorOptions options = new FritzVisionSegmentPredictorOptions.Builder()
-                .targetConfidenceThreshold(.6f)
-                .build();
-        predictor = FritzVision.ImageSegmentation.getPredictor(onDeviceModel, options);
-
         snapshotOverlay.setCallback(new OverlayView.DrawCallback() {
             @Override
             public void drawCallback(final Canvas canvas) {
@@ -170,7 +170,7 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
         snapshotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!computing.compareAndSet(false, true)) {
+                if (!shouldSample.compareAndSet(true, false)) {
                     return;
                 }
 
@@ -185,7 +185,6 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
                                 showSnapshotLayout();
                                 hideSpinner();
                                 snapshotOverlay.postInvalidate();
-                                computing.set(false);
                             }
                         });
             }
@@ -206,6 +205,7 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
             @Override
             public void onClick(View view) {
                 showPreviewLayout();
+                shouldSample.set(true);
                 backgroundBitmap = null;
             }
         });
@@ -252,7 +252,7 @@ public class MainActivity extends BaseCameraActivity implements ImageReader.OnIm
             return;
         }
 
-        if (computing.get()) {
+        if (!shouldSample.get()) {
             image.close();
             return;
         }
