@@ -1,5 +1,12 @@
-# A Lightweight App for Live Video
+# Smart Background Replacement with Image Segmentation by Fritz
 
-Use our lightweight, camera app to get started running prediction on a live video stream using machine learning models.
+Full tutorial coming soon.
 
-In this example, we use the on-device, [Style Transfer API](https://docs.fritz.ai/develop/vision/style-transfer/android.html) in order to apply a style to each frame of a video; however, you can follow the directions for any of the [Vision APIs](https://docs.fritz.ai/develop/vision/index.html) or add your own [Custom Models](https://docs.fritz.ai/develop/custom-models/index.html).
+*Get Started*
+Open up Android Studio and go to File > Import Project. Choose the 
+background-replacement-with-people-segmentation folder and click OK. The gradle dependencies should begin loading.
+
+## For questions, contact us:
+
+- [Slack](https://heartbeat-by-fritz.slack.com/join/shared_invite/enQtMzY5OTM1MzgyODIzLTZhNTFjYmRiODU0NjZjNjJlOGRjYzI2OTIwY2M4YTBiNjM1ODU1ZmU3Y2Q2MmMzMmI2ZTIzZjQ1ZWI3NzBkZGU)
+- [Help Center](https://docs.fritz.ai/help-center/index.html)
