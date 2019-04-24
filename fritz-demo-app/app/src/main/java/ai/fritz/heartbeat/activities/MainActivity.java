@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         logger.info("FRITZ VISION LIVE VIDEO");
-                        Navigation.goToLiveVideoFritzLabel(v.getContext());
+                        Navigation.goToLabelingActivity(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        logger.info("FRITZ OBJECT DETECTION");
                         Navigation.goToObjectDetection(v.getContext());
                     }
                 }));
@@ -96,35 +95,25 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        logger.info("FRITZ VISION STYLE TRANSFER");
                         Navigation.goToStyleTransfer(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(
-                getString(R.string.fritz_vision_people_segmentation_title),
-                getString(R.string.fritz_vision_people_segmentation_description),
+                getString(R.string.fritz_hair_color_title),
+                getString(R.string.fritz_hair_color_description),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Navigation.goToImageSegmentation(v.getContext(), PredictorType.PEOPLE_SEGMENTATION);
+                        Navigation.goToHairSegmentation(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(
-                getString(R.string.fritz_vision_living_room_segmentation_title),
-                getString(R.string.fritz_vision_living_room_segmentation_description),
+                getString(R.string.fritz_vision_img_seg_title),
+                getString(R.string.fritz_vision_img_seg_description),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Navigation.goToImageSegmentation(v.getContext(), PredictorType.LIVING_ROOM_SEGMENTATION);
-                    }
-                }));
-        demoItems.add(new DemoItem(
-                getString(R.string.fritz_vision_outdoor_segmentation_title),
-                getString(R.string.fritz_vision_outdoor_segmentation_description),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Navigation.goToImageSegmentation(v.getContext(), PredictorType.OUTDOOR_SEGMENTATION);
+                        Navigation.goToImageSegmentation(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(
@@ -133,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Navigation.startPoseEstimation(v.getContext());
+                        Navigation.goToPoseEstimation(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(

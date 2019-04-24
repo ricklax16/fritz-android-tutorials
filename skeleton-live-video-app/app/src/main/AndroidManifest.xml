@@ -28,8 +28,9 @@
         <meta-data
             android:name="fritz_api_key"
             android:value="your app's api key" />
+
         <service
-            android:name="ai.fritz.core.FritzJob"
+            android:name="ai.fritz.core.FritzCustomModelService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
