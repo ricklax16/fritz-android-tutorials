@@ -1,4 +1,8 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">Fritz Camera Template</string>
+=======
+    <string name="app_name">FritzCameraApp</string>
+>>>>>>> 64f9b63742b72b3d109eef0de85fead35169d1cd
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
 </resources>

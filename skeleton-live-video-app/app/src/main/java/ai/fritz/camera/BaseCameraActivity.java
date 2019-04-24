@@ -71,6 +71,11 @@ public abstract class BaseCameraActivity extends AppCompatActivity implements On
     public synchronized void onPause() {
         Log.d(TAG, "onPause " + this);
 
+        if (!isFinishing()) {
+            Log.d(TAG, "Requesting finish");
+            finish();
+        }
+
         handlerThread.quitSafely();
         try {
             handlerThread.join();

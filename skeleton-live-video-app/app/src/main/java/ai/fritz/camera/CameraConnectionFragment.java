@@ -318,7 +318,7 @@ public class CameraConnectionFragment extends Fragment {
         super.onResume();
         startBackgroundThread();
 
-        // When the screen is turned off and turned back on, the SurfaceTexture is ai.fritz.heartbeat.ui.AutoFitTextureViewalready
+        // When the screen is turned off and turned back on, the SurfaceTexture is already
         // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
         // a camera and start preview from here (otherwise, we wait until the surface is ready in
         // the SurfaceTextureListener).
