@@ -31,27 +31,35 @@
         </activity>
         <activity
             android:name="ai.fritz.heartbeat.activities.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
         <activity
             android:name="ai.fritz.heartbeat.activities.vision.StyleTransferActivity"
             android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
         <activity
             android:name="ai.fritz.heartbeat.activities.vision.ImageLabelingActivity"
             android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="ai.fritz.heartbeat.activities.vision.ObjectDetectionActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="ai.fritz.heartbeat.activities.vision.ImageSegmentationActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
+            android:theme="@style/MainTheme" />
         <activity
             android:name="ai.fritz.heartbeat.activities.vision.PoseEstimationActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="ai.fritz.heartbeat.activities.vision.HairSegmentationActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
+            android:theme="@style/MainTheme" />
         <activity
             android:name="ai.fritz.heartbeat.activities.custommodel.CustomTFMobileActivity"
             android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
@@ -62,11 +70,12 @@
         <meta-data
             android:name="fritz_api_key"
             android:value="@string/fritz_api_key" />
+
+
         <service
             android:name="ai.fritz.core.FritzCustomModelService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
     </application>
 
 </manifest>

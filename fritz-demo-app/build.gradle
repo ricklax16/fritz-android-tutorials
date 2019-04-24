@@ -20,14 +20,11 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        // Specific for Fritz at the moment.
-        maven {
-            url "https://raw.github.com/fritzlabs/fritz-repository/master"
-        }
 
         maven {
             url 'https://maven.google.com/'
         }
+        maven { url 'https://raw.github.com/fritzlabs/fritz-repository/master' }
     }
 }
 

@@ -35,18 +35,15 @@ android {
 
 dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'org.tensorflow:tensorflow-lite:+'
-    implementation 'org.tensorflow:tensorflow-android:+'
 
-    implementation "ai.fritz:core:${sdk_version}"
-
-    implementation "ai.fritz:custom-model-tflite:${sdk_version}"
     implementation "ai.fritz:vision:${sdk_version}"
+    implementation "ai.fritz:custom-model-tflite:${sdk_version}"
 
     implementation "ai.fritz:vision-image-label-model:${sdk_version}"
     implementation "ai.fritz:vision-object-detection-model:${sdk_version}"
     implementation "ai.fritz:vision-style-painting-models:${sdk_version}"
     implementation "ai.fritz:vision-pose-estimation-model:${sdk_version}"
+    implementation "ai.fritz:vision-hair-segmentation-model:${sdk_version}"
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')

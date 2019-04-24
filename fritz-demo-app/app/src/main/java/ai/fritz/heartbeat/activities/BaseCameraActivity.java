@@ -1,7 +1,6 @@
 package ai.fritz.heartbeat.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
@@ -13,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.view.KeyEvent;
@@ -23,9 +24,10 @@ import ai.fritz.heartbeat.R;
 import ai.fritz.heartbeat.fragments.CameraConnectionFragment;
 import ai.fritz.heartbeat.ui.OverlayView;
 
-public abstract class BaseCameraActivity extends Activity implements OnImageAvailableListener {
-    private static final String TAG = BaseCameraActivity.class.getSimpleName();
 
+public abstract class BaseCameraActivity extends AppCompatActivity implements OnImageAvailableListener {
+    private static final String TAG = BaseCameraActivity.class.getSimpleName();
+    private static int MAX_WIDTH = 500;
     private static final int PERMISSIONS_REQUEST = 1;
 
     private static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
@@ -73,11 +75,6 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
     @Override
     public synchronized void onPause() {
         Log.d(TAG, "onPause " + this);
-
-        if (!isFinishing()) {
-            Log.d(TAG, "Requesting finish");
-            finish();
-        }
 
         handlerThread.quitSafely();
         try {
@@ -222,10 +219,10 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
         }
     }
 
-    public void addCallback(final OverlayView.DrawCallback callback) {
+    public void setCallback(final OverlayView.DrawCallback callback) {
         final OverlayView overlay = (OverlayView) findViewById(R.id.debug_overlay);
         if (overlay != null) {
-            overlay.addCallback(callback);
+            overlay.setCallback(callback);
         }
     }
 
@@ -247,7 +244,9 @@ public abstract class BaseCameraActivity extends Activity implements OnImageAvai
 
     protected abstract int getLayoutId();
 
-    protected abstract Size getDesiredPreviewFrameSize();
+    protected Size getDesiredPreviewFrameSize() {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float ratio = (float) metrics.heightPixels / metrics.widthPixels;
+        return new Size(MAX_WIDTH, (int) ratio * MAX_WIDTH);
+    }
 }
-
-
