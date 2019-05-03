@@ -27,7 +27,8 @@ import butterknife.ButterKnife;
 /**
  * The primary activity that shows the different model demos.
  */
-public class MainActivity extends AppCompatActivity {
+public class
+    MainActivity extends AppCompatActivity {
 
     private static final String FRITZ_URL = "https://fritz.ai";
 
@@ -105,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Navigation.goToHairSegmentation(v.getContext());
+                    }
+                }));
+        demoItems.add(new DemoItem(
+                getString(R.string.sky_vision_change),
+                getString(R.string.sky_vision_description),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Navigation.goToSkySegmentation(v.getContext());
                     }
                 }));
         demoItems.add(new DemoItem(

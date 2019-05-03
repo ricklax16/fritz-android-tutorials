@@ -61,6 +61,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity
+            android:name="ai.fritz.heartbeat.activities.vision.SkySegmentationActivity"
+            android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
+        <activity
             android:name="ai.fritz.heartbeat.activities.custommodel.CustomTFMobileActivity"
             android:parentActivityName="ai.fritz.heartbeat.activities.MainActivity" />
         <activity

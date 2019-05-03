@@ -3,6 +3,9 @@
     <!-- In the MainActivity -->
     <string name="demo_title">Heartbeat</string>
 
+    <string name="sky_vision_change">Sky Coloring</string>
+    <string name="sky_vision_description">Change the color of the sky.</string>
+
     <string name="fritz_vision_style_transfer">Style Transfer</string>
     <string name="fritz_vision_style_transfer_description">Run style transfer on live video feed.</string>
 
