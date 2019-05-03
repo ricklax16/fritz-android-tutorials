@@ -10,6 +10,7 @@ import ai.fritz.heartbeat.activities.vision.ImageLabelingActivity;
 import ai.fritz.heartbeat.activities.vision.ImageSegmentationActivity;
 import ai.fritz.heartbeat.activities.vision.ObjectDetectionActivity;
 import ai.fritz.heartbeat.activities.vision.PoseEstimationActivity;
+import ai.fritz.heartbeat.activities.vision.SkySegmentationActivity;
 import ai.fritz.heartbeat.activities.vision.StyleTransferActivity;
 
 /**
@@ -54,6 +55,10 @@ public class Navigation {
 
     public static void goToHairSegmentation(Context context) {
         Intent poseEstimation = new Intent(context, HairSegmentationActivity.class);
+        context.startActivity(poseEstimation);
+    }
+    public static void goToSkySegmentation(Context context) {
+        Intent poseEstimation = new Intent(context, SkySegmentationActivity.class);
         context.startActivity(poseEstimation);
     }
 }

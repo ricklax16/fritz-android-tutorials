@@ -16,7 +16,7 @@ import ai.fritz.vision.FritzVisionOrientation;
 
 public abstract class BaseLiveVideoActivity extends BaseCameraActivity implements ImageReader.OnImageAvailableListener {
 
-    private static final String TAG = BaseLiveVideoActivity.class.getSimpleName();
+    protected static final String TAG = BaseLiveVideoActivity.class.getSimpleName();
     private AtomicBoolean computing = new AtomicBoolean(false);
 
     private int imageRotation;

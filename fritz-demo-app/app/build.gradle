@@ -35,7 +35,9 @@ android {
 
 dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
-
+    implementation 'ai.fritz:core:3.3.+'
+    implementation 'ai.fritz:vision:3.3.+'
+    implementation 'ai.fritz:vision-outdoor-segmentation-model:3.3.+'
     implementation "ai.fritz:vision:${sdk_version}"
     implementation "ai.fritz:custom-model-tflite:${sdk_version}"
 
@@ -44,7 +46,6 @@ dependencies {
     implementation "ai.fritz:vision-style-painting-models:${sdk_version}"
     implementation "ai.fritz:vision-pose-estimation-model:${sdk_version}"
     implementation "ai.fritz:vision-hair-segmentation-model:${sdk_version}"
-
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
